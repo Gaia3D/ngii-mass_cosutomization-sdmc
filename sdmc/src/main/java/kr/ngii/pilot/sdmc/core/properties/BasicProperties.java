@@ -6,16 +6,19 @@ public class BasicProperties {
 	public static final String BASIC_TILE_SERVICE = "";
 	
 	// database configuration
-	public static final String SPATIAL_DATABASE_URL = "jdbc:postgresql://172.22.24.249:5432/sdmc";
-	public static final String DATABASE_ACCOUNT = "ngii";
+	//public static final String SPATIAL_DATABASE_URL = "jdbc:postgresql://172.22.24.249:5432/sdmc";
+	//public static final String DATABASE_ACCOUNT = "ngii";
+	public static final String SPATIAL_DATABASE_URL = "jdbc:postgresql://192.168.10.38:5432/sdmc";
+	public static final String DATABASE_ACCOUNT = "postgres";
 	public static final String DATABASE_PASSWORD = "0000";
 	
 	// map data server configuration
 	public static final String MAP_SERVER_URL = "";
 	
 	// data processing server 접근 설정
-	public static final String DATA_PROCESSING_API = "http://172.22.24.249/api";
+	//public static final String DATA_PROCESSING_API = "http://172.22.24.249/api";
 	//public static final String DATA_PROCESSING_API = "http://192.168.0.4:5000/api";
+	public static final String DATA_PROCESSING_API = "http://192.168.10.38/api";
 	
 	// 주문 처리 결과 관련 메시지 설정
 	public static final String ORDER_HANDLING_SUCCESS = "order handling success";

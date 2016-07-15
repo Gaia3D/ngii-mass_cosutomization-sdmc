@@ -173,7 +173,8 @@
 		NgiiMap: {
 //            url: 'http://emap.ngii.go.kr/proxy/proxyTile.jsp?URL=http://210.117.198.62:8081/korean_map_tile/L{z}/{x}/{y}.png',
 			//url: 'http://211.106.171.49//tile/base_map_tile/L{z}/{x}/{y}.png',
-			url: 'http://172.22.24.249//tile/base_map_tile/L{z}/{x}/{y}.png',
+			//url: 'http://172.22.24.249//tile/base_map_tile/L{z}/{x}/{y}.png',
+			url: 'http://192.168.10.38/tile/base_map_tile/L{z}/{x}/{y}.png',
 			crs: L.Proj.CRS.TMS.NgiiMap,
 			options: {
 				maxZoom: 18,
