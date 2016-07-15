@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
+    <typeAliases>
+        <typeAlias alias="User" type="kr.ngii.pilot.sdmc.sample.model.User"/>
+
+        <typeAlias alias="area" type="kr.ngii.pilot.sdmc.login.service.vo.AreaVO"/>
+        <typeAlias alias="layer" type="kr.ngii.pilot.sdmc.main.service.vo.LayerVO"/>
+        <typeAlias alias="format" type="kr.ngii.pilot.sdmc.main.service.vo.FormatVO"/>
+        <typeAlias alias="srs" type="kr.ngii.pilot.sdmc.main.service.vo.SrsVO"/>
+        <typeAlias alias="doyeup" type="kr.ngii.pilot.sdmc.main.service.vo.DoyeupVO"/>
+
+        <typeAlias alias="order" type="kr.ngii.pilot.sdmc.tx.order.service.vo.OrderVO"/>
+        <typeAlias alias="product" type="kr.ngii.pilot.sdmc.tx.order.service.vo.ProductVO"/>
+        <typeAlias alias="outputInfo" type="kr.ngii.pilot.sdmc.tx.order.service.vo.OutputInfoVO"/>
+
+        <typeAlias alias="hashMap" type="java.util.HashMap"/>
+    </typeAliases>
+
+    <mappers>
+        <mapper resource ="sqlmap/mappers/User_SQL.xml"/>
+		<mapper resource ="sqlmap/mappers/main/main_main_sql.xml"/>
+		<mapper resource ="sqlmap/mappers/login/login_login_sql.xml"/>
+		<mapper resource ="sqlmap/mappers/odrprd/odrprd_order_sql.xml"/>
+    </mappers>
+
+</configuration>

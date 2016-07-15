@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>맞춤형 공간정보제공시스템</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta name="format-detection" content="telephone=no" />
+<link href="../css/style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+
+<div id="HeaderWrap">
+    <div class="header">
+        <h1>맞춤형 공간정보제공시스템</h1>
+        <ul class="nav">            
+            <li class="on"><a href="#">자료요청</a></li>
+            <li><a href="#">나의 자료목록</a></li>
+            <li><a href="#">공간변화정보</a></li>
+        </ul>
+        <p class="gnb">
+        	<button>로그아웃</button>
+        </p>
+    </div>
+</div>
+<!-- END HEADER -->
+
+<div id="wrap">
+    <h2 class="hide">자료요청 1단계</h2>
+    <div class="SearchWrap">
+        <form>
+            <p class="search">
+                <input type="text" placeholder="지명,행정명, 위치명을 입력하세요">
+                <button class="SearchBtn">검색</button>
+            </p>
+            <p class="tag">
+                <a href="#">세종특별자치시,</a>
+                <a href="#">남해대교,</a>
+                <a href="#">광명수원고속도로,</a>
+                <a href="#">원주시,</a>
+                <a href="#">대덕테크노밸리</a>
+            </p> 
+        </form>       	
+    </div>
+    
+    
+    <div class="ContentsWrap">
+        <div class="map">
+        
+        </div>
+        <!-- END MAP -->            
+        
+        <div class="contents" style="width:590px">
+            <p class="message">
+                입력하신 '<span>세종정부청사</span>'에 대하여 총<span>18</span>건의 검색결과가 있습니다.
+            </p>
+            
+            <div class="AlignRight">
+                <button class="btn">모두펼치기</button>
+                <button class="btn">모두닫기</button>
+            </div>
+            
+            <ul class="list mb10">
+                <li>
+                    <a href="#">지명<span>122건</span></a>
+                    <p class="libtn">
+                    	<button class="open">펼치기</button>
+                    </p>
+                </li>
+                <li class="on">
+                    <a href="#">건물명<span>3건</span></a>
+                    <p class="libtn">
+               			<button class="shut">닫기</button>
+                    </p>
+                    <ul class="sublist">
+                        <li><a href="#"><span>울랄라</span>세종특별시 어진동 3-113</a></li>
+                        <li><a href="#"><span>까사미아</span>세종특별시 어진동 3-113</a></li> 
+                        <li><a href="#"><span>한샘</span>세종특별시 어진동 3-113</a></li> 
+                        <li><a href="#"><span>이케아</span>세종특별시 어진동 3-113</a></li> 
+                        <li><a href="#"><span>리바트</span>세종특별시 어진동 3-113</a></li>                         
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">상업시설<span>12건</span></a>
+                    <p class="libtn">
+                    	<button class="open">펼치기</button>
+                    </p>                    
+                </li>
+                <li>
+                    <a href="#">도로명주소<span>3건</span></a>
+                    <p class="libtn">
+                    	<button class="open">펼치기</button>
+                    </p>
+                </li>
+                <li>
+                    <a href="#">지번주소<span>12건</span></a>
+                    <p class="libtn">
+                    	<button class="open">펼치기</button>
+                    </p>
+                </li>
+                <li>
+                    <a href="#">지도도엽<span>3건</span></a>
+                    <p class="libtn">
+                    	<button class="open">펼치기</button>
+                    </p>
+                </li>
+            </ul>
+            
+            <div class="AlignRight">
+                <button class="point">다음단계</button>
+            </div>            
+        </div>
+        <!-- END CONTENTS -->        
+    </div>
+</div>
+<!-- END WRAP --> 
+
+<div id="FooterWrap">      
+    <div class="footer">
+        <div class="copyright">
+            <p>(305-806) 경기도 수원시 영통구 월트컵로 92(원천동)  T. 031-210-2600</p>
+            <p>©2016 NGII. All rights reserved.</p>
+        </div>    
+    </div>
+</div>
+<!-- END FOOTER -->
+</body>
+</html>

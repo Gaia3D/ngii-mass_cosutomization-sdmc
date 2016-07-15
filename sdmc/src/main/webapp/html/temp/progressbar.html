@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+	<link href="../../common/js/jqui/jquery-ui.css" rel="stylesheet">
+
+<title>Test Page</title>
+
+
+<script src="../../common/js/jquery-2.2.3.min.js"></script>
+<script src="../../common/js/jqui/jquery-ui.js"></script>
+<script>
+
+var rate = 0;
+var maxVal = 10000;
+var timeout = 200;
+
+$(function(){
+	//setTimeout(loop, 50);
+	loop("funcSinProgress",1 );
+	loop("funcSquareProgress",2 );
+	loop("funcNormalProgress",3 );
+	loop("funcDoubleProgress",4 );
+	loop("funcReverseProgress",5 );
+});
+
+
+function funcSinProgress(x){
+	var retVal = 0;
+	retVal = maxVal * Math.sin(x/900)+1; 
+	//console.log(retVal);
+	return retVal;
+}
+
+function funcSquareProgress(x){
+	var retVal = 0;
+	retVal = x*x/Math.sqrt(maxVal); 
+	//console.log(retVal);
+	return retVal;
+}
+
+function funcNormalProgress(x){
+	var retVal = 0;
+	retVal = x * Math.sqrt(Math.sqrt(maxVal)); 
+	//console.log(retVal);
+	return retVal;
+}
+
+function funcDoubleProgress(x){
+	var retVal = 0;
+	retVal = x * 2; 
+	//console.log(retVal);
+	return retVal;
+}
+
+function funcReverseProgress(x){
+	var retVal = 0;
+	retVal = maxVal - (maxVal / (x*x)) ; 
+	//console.log(retVal);
+	return retVal;
+}
+
+
+function loop(func, idx){
+	var funcProgress = eval(func);
+	
+	$( "#progressbar" + idx ).progressbar({
+		min : 0,
+		max : maxVal,
+		value: funcProgress(rate++)
+	});
+	//console.log("asdf");
+	
+	if(funcProgress(rate) > maxVal){
+		$("#btnDown" + idx ).prop("disabled", false);
+	} else {
+		setTimeout(function(){
+			loop(func, idx);
+		}, timeout);
+	}
+}
+
+</script>
+
+</head>
+<body>
+
+<div id="main" class="contents">
+<select id="sido"></select>
+<select id="sgg"></select>
+<select id="umd"></select>
+<button id="addSelection" type="button">add</button><button id="clearSelection" type="button">clear</button><br/>
+<p id="selectedItems"></p>
+</div>
+
+
+<h2 class="demoHeaders">Progressbar</h2>
+<div id="progressbar1"></div> <button id="btnDown1" disabled>다운로드</button>
+<div id="progressbar2"></div> <button id="btnDown2" disabled>다운로드</button>
+<div id="progressbar3"></div> <button id="btnDown3" disabled>다운로드</button>
+<div id="progressbar4"></div> <button id="btnDown4" disabled>다운로드</button>
+<div id="progressbar5"></div> <button id="btnDown5" disabled>다운로드</button>
+
+
+<div id="map" class="map"></div> 
+</body>
+</html>

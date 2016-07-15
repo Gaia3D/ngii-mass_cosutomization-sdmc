@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ <mapper namespace="kr.ngii.pilot.sdmc.tx.order.service.dao.OrderDao">
+ 
+ 	<insert id="insertOrderItem" parameterType="order">
+        <selectKey keyProperty="orderId" resultType="String" order="BEFORE">
+            select 'ord' || lpad(cast(cast(COALESCE(MAX(substr(order_id,4,5)), '0' ) as int) + 1 as text), 5, '0')  as order_id FROM odr_prd.order_info
+        </selectKey>
+        INSERT INTO odr_prd.order_info (
+			order_id
+			,order_type
+			,order_date
+			,order_version
+			,srs
+			,format
+			,status
+			,update_status
+			,user_id
+			,reg_dt
+			,reg_user_id
+        )VALUES(
+			#{orderId}
+			,#{orderType}
+			,now()
+			,to_timestamp(#{orderVersion}, 'YYYY.MM.DD HH24:MI:SS')
+			,#{srs}
+			,#{format}
+			,cast(#{status} as int)
+			,#{updateStatus}
+			,#{userId}
+			,#{regDt}
+			,#{regUserId}
+        )
+    </insert>
+
+ 	<insert id="insertProductItem" parameterType="product">
+        <selectKey keyProperty="orderProductId" resultType="String" order="BEFORE">
+            select 'pdt' || lpad(cast(cast(COALESCE(MAX(substr(order_product_id,4,5)), '0' ) as int) + 1 as text), 5, '0')  as order_product_id
+              FROM odr_prd.product_info
+        </selectKey>
+        INSERT INTO odr_prd.product_info (
+			order_id
+			,order_product_id
+			,layer_id
+			,bjcd
+			,map_num
+			,map_name
+			,shape
+			,reg_dt
+			,reg_user_id
+			,srs
+			,format
+        )VALUES(
+			#{orderId}
+			,#{orderProductId}
+			,#{layerId}
+			,#{bjcd}
+			,#{mapNum}
+			,#{mapName}
+			,#{shape}
+			,#{regDt}
+			,#{regUserId}
+			,#{srs}
+			,#{format}
+        )
+    </insert>
+
+
+ 
+ 	<select id="selectOrderList" resultType="order">
+        SELECT  order_id
+        		,order_type
+        		,to_char(order_date, 'YYYY.MM.DD hh24:mi:ss') order_date
+        		,to_char(order_version, 'YYYY.MM.DD hh24:mi:ss') order_version
+				, CASE WHEN order_type = '0' then
+				  ( select array_agg(distinct (sido.name || COALESCE(' ' || (select name from nfsd.nf_a_g01103 where substr(bjcd,1,4) = substr(sgg.bjcd,1,4) and substr(bjcd,5,1) = '0' and substr(sgg.bjcd,5,1) != '0' ) || ' ' || sgg.name,'') ||COALESCE(' ' || dong.name, '')))
+					  from odr_prd.product_info pinfo
+							left OUTER JOIN nfsd.nf_a_g01102 sido on left(pinfo.bjcd, 2) = left(sido.bjcd, 2)
+							left OUTER JOIN nfsd.nf_a_g01103 sgg on left(pinfo.bjcd, 5) = left(sgg.bjcd, 5)
+							left OUTER JOIN nfsd.nf_a_g01106 dong on left(pinfo.bjcd, 8) = left(dong.bjcd, 8)
+					 where 1=1
+				       and order_id = info.order_id)
+				   WHEN order_type = '1' then
+				  ( select array_agg(distinct pInfo.map_num)
+  					  from odr_prd.product_info pinfo
+  				  	       , cdm_2015.n3a_h0010000 doyeup
+					 where pinfo.map_num = doyeup.dycd
+					   and pinfo.order_id = info.order_id)
+					END 
+				  as geo_name
+				, CASE WHEN order_type = '0' then
+				  ( select array_agg(distinct bjcd)
+					  from odr_prd.product_info pinfo
+					 where 1=1
+				       and order_id = info.order_id)
+				   WHEN order_type = '1' then
+				  ( select array_agg(distinct pInfo.map_num)
+  					  from odr_prd.product_info pinfo
+					 where 1=1
+					   and pinfo.order_id = info.order_id)
+					END 
+				  as ordered_area_code
+        		,srs
+        		,(select cmcd_name from odr_prd.common_code
+        		   where cmcd_parent_cd = 'EPSG' and cmcd = info.srs) as srs_name
+        		,format
+        		,(select cmcd_name from odr_prd.common_code
+        		   where cmcd_parent_cd = 'fileformat' and cmcd = info.format
+        		  ) as format_name
+        		,(select cmcd_name from odr_prd.common_code
+        		   where cmcd_parent_cd = 'fileformat' and cmcd = info.format
+        		  ) as format
+        		,( select array_agg(distinct layer_id)
+					 from odr_prd.product_info pinfo
+					where 1=1
+					  and order_id = info.order_id 
+				 ) as ordered_layer
+        		,( select array_agg(distinct layer_name)
+					 from odr_prd.product_info pinfo, odr_prd.layer_info linfo
+					where 1=1
+					  and pinfo.layer_id = linfo.layer_id
+					  and order_id = info.order_id 
+				 ) as ordered_layer_name
+				,file_id file_uri 
+        		,status
+        		,update_status
+        		,user_id
+        		,reg_dt
+        		,reg_user_id
+        FROM odr_prd.order_info info
+			<where>
+				1=1
+				<if test="orderId != null">
+				and order_id = #{orderId}
+				</if>
+				<if test="userId != null">
+				and user_id = #{userId}
+				</if>
+			</where>
+        order by order_date asc
+    </select>
+    
+    <select id="getOutputInfo" resultType="outputInfo">
+    	SELECT a.stored_path || '/' || a.file_id || '.zip' outputInternalPath, a.output_name outputExternalName
+    	FROM odr_prd.file_info a, (SELECT file_id FROM odr_prd.order_info WHERE order_id = #{orderId}) b
+		WHERE  a.file_id = b.file_id;
+    </select>
+
+ 	<update id="updateUpdateStatus">
+ 		update odr_prd.order_info set
+ 		 	update_status = '2'
+ 		 where 1=1
+ 		   and order_id = #{orderId}
+ 		   and user_id = #{userId}
+ 		   and update_status = '3'
+ 	</update>
+ 
+
+ </mapper>

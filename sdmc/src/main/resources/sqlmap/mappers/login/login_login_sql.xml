@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ <mapper namespace="kr.ngii.pilot.sdmc.login.service.dao.LoginDao">
+ 
+ 	<select id="selectAreaList" resultType="area">
+		 select orderInfo.order_id, productInfo.layer_id
+				, (select order_version from odr_prd.order_info where order_id = orderInfo.order_id) order_version
+				,(select schema from odr_prd.layer_info where layer_id = productInfo.layer_id) schema_name
+				,(select user_id from odr_prd.order_info where order_id = orderInfo.order_id) user_id
+				, array_agg(productInfo.bjcd) bjcds
+				, ST_AsGeoJSON(COALESCE(ST_UNION( productInfo.wkb_geometry))) bjcd_geoms
+		   from (select * from odr_prd.order_info oInfo
+				  where 1=1
+				<if test="userId != null">
+			    	and oInfo.user_id = #{userId}
+				</if>
+				    and oInfo.update_status = '1'
+				) orderInfo
+				,(	select pInfo.order_id
+						, pInfo.layer_id
+						,COALESCE(COALESCE(sido.bjcd, sgg.bjcd), umd.bjcd)         bjcd
+						,ST_Transform(COALESCE(COALESCE(sido.wkb_geometry, sgg.wkb_geometry), umd.wkb_geometry), 5179)         wkb_geometry
+					  from odr_prd.product_info pInfo
+						left OUTER JOIN nfsd.nf_a_g01102 sido on pInfo.bjcd = sido.bjcd
+						left OUTER JOIN nfsd.nf_a_g01103 sgg on pInfo.bjcd = sgg.bjcd
+						left OUTER JOIN nfsd.nf_a_g01106 umd on pInfo.bjcd = umd.bjcd
+					  where (select order_type from odr_prd.order_info where order_id = pInfo.order_id) = '0'
+					union
+					select pInfo.order_id, pInfo.layer_id
+						,dycd         bjcd
+						,ST_Transform(doyeup.wkb_geometry, 5179)   wkb_geometry
+					  from odr_prd.product_info pInfo, cdm_2015.n3a_h0010000 doyeup
+					 where pInfo.map_num = doyeup.dycd
+					   and (select order_type from odr_prd.order_info where order_id = pInfo.order_id) = '1'
+				) productInfo   
+			  where 1=1
+			    and orderInfo.order_id = productInfo.order_id
+			  group by orderInfo.order_id, productInfo.layer_id
+    </select>
+ 
+ 
+ 	<select id="selectIntersectCount" resultType="String">
+		select count(1) as cnt
+		  from  (select wkb_geometry
+	  			  from ${tName} layer
+				 where 1=1
+				   and not ST_isEmpty(wkb_geometry)
+				   and not ST_isEmpty(st_geomfromgeojson('${bjcdGeoms}'))
+	   			   and not ST_isEmpty(ST_Intersection(wkb_geometry, ST_SetSRID(st_geomfromgeojson('${bjcdGeoms}'),5179))) 
+				   and (layer.create_dttm >  to_timestamp(#{orderVersion}, 'YYYY.MM.DD hh24:mi:ss ')
+				   		or layer.delete_dttm >  to_timestamp(#{orderVersion}, 'YYYY.MM.DD hh24:mi:ss '))
+				 limit 2) layer
+    </select>
+ 
+ 	<update id="updateUpdateStatus">
+ 		update odr_prd.order_info set
+ 		 	update_status = '3'
+ 		 where 1=1
+ 		   and order_id = #{orderId}
+ 		   and user_id = #{userId}
+ 		   and update_status = '1'
+ 	</update>
+ 
+ </mapper>

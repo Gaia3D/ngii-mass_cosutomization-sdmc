@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://172.22.24.249:5432/sdmc" />
+        <property name="username" value="ngii" />
+        <property name="password" value="0000" />
+    </bean>
+
+	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg value="225751585490-g0f642ar1i1j7ljio4bi0qe2m0uhkak4.apps.googleusercontent.com" />
+		<constructor-arg value="vKWH-TbxBkbhDQVGbSKaO31b" />
+	</bean>
+			
+	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
+	<!-- 	<property name="scope" value="https://www.googleapis.com/auth/plus.me"/> -->
+		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:48080/sdmc/loginCallback.ngii"/>
+	</bean>
+	
+	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+		<constructor-arg value="498314363693912" />
+		<constructor-arg value="648dd30d53997e8a669cf737b7dc61a8" />
+	</bean>
+		
+	<bean id="facebookOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope" value="email public_profile"/>
+		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:48080/sdmc/loginCallback.ngii"/>
+	</bean>
+	
+	<bean id="daumConnectionFactory" class="org.springframework.social.daum.blog.connect.DaumBlogConnectionFactory">
+		<constructor-arg value="498314363693912" />
+		<constructor-arg value="498314363693912" />
+	</bean>
+		
+	<bean id="daumOAuth1Parameters" class="org.springframework.social.oauth1.OAuth1Parameters">
+	</bean>
+	
+	<bean id="kakaoConnectionFactory" class="org.springframework.social.kakao.connect.KakaoConnectionFactory">
+		<constructor-arg value="498314363693912" />
+	</bean>
+		
+	<bean id="kakaoOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope" value="email public_profile"/>
+		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:48080/sdmc/loginCallback.ngii"/>
+	</bean>
+
+    <!-- Root Context: defines shared resources visible to all other web components -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="select*" read-only="true" />
+            <tx:method name="insert*" rollback-for="Exception" />
+            <tx:method name="update*" rollback-for="Exception" />
+            <tx:method name="delete*" rollback-for="Exception" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="requiredTx" expression="execution(* kr.ngii.pilot.sdmc..service.*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx" />
+    </aop:config>
+
+
+    <!-- Sample SqlSession setup for MyBatis Database Layer -->
+    <bean id="sqlSession1" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:/sqlmap/sql-mapper-config.xml" />
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="kr.ngii.pilot.sdmc" />
+        <property name="annotationClass" value="kr.ngii.pilot.sdmc.core.annotation.DsApp"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSession1"/>
+    </bean>
+    
+    <!-- SDMC SqlSession setup for MyBatis Database Layer -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:/sqlmap/sql-mapper-config-mybatis.xml" />
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="kr.ngii.pilot.sdmc" />
+        <property name="annotationClass" value="kr.ngii.pilot.sdmc.core.annotation.MybatisForSdmc"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
+    </bean>
+
+	<!-- Spring 과 json과의  연동 설정 -->   
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	    <property name="messageConverters">
+	    <list>    
+	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	            <property name="supportedMediaTypes">
+	                <list>
+	                    <value>text/html;charset=UTF-8</value>
+	                    <value>application/json;charset=UTF-8</value>
+	                </list>
+	            </property>
+	        </bean>            
+	    </list>
+	    </property>                        
+	</bean>  
+</beans>

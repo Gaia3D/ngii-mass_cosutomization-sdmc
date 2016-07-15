@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ngii.pilot.sdmc.sample.service.dao.UserDao">
+
+    <select id="selectAllUsers" resultType="User" parameterType="User">
+        SELECT  id,
+                user_name,
+                pass_word,
+                phon_no,
+                addr
+        FROM tbl_user
+        <if test="_parameter != null">
+            WHERE id = #{id}
+        </if>
+        ORDER BY id
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        <selectKey keyProperty="id" resultType="String" order="BEFORE">
+            select 'userId' ||  LPAD(NVL(MAX(substr(id, 7, 3)), 0) + 1, 3, '0') as id FROM tbl_user
+        </selectKey>
+        INSERT INTO tbl_user (
+            id,
+            user_name,
+            pass_word,
+            phon_no,
+            addr
+        )VALUES(
+            #{id},
+            #{userName},
+            #{passWord},
+            #{phonNo},
+            #{addr}
+        )
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE tbl_user
+        SET user_name = #{userName},
+        <if test="passWord != null and passWord != ''">
+            pass_word = #{passWord},
+        </if>
+            phon_no   = #{phonNo},
+            addr      = #{addr}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="User">
+        DELETE FROM tbl_user
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

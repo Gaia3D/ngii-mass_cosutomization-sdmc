@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../common/js/leaflet/leaflet.css" />
+<link rel="stylesheet" href="../../common/js/leaflet/locationfilter.css" />
+
+<style>
+.map {
+float:right;
+width:380px;
+height:500px;
+margin-right:25px;
+border:1px solid #ccc;
+}
+</style>
+
+<title>Test Page</title>
+
+<script src="../../common/js/jquery-2.2.3.min.js"></script>
+<script src="../../common/js/leaflet/leaflet-src.js"></script>
+<script src="../../common/js/leaflet/proj4-compressed.js"></script>
+<script src="../../common/js/leaflet/proj4leaflet.js"></script>
+<script src="../../common/js/leaflet/Leaflet.KoreanTmsProviders.js"></script>
+<script src="../../common/js/leaflet/locationfilter.js"></script>
+<script src="../../common/js/leaflet/map_control.js"></script>
+<script>
+
+var sidoData = null;
+var sggData = null;
+var umdData = null;
+
+var bGeometryArriven = false;
+
+var selectedAreaKeys = [];
+
+function prepareControls()
+{
+	prepareSelectors();
+	prepareOhers();
+}
+
+function prepareOhers()
+{
+	$('#addSelection').click(
+		function()
+		{
+			if(addSelectedItem())
+				moveCandidateToSelected();
+			else
+			{
+				removeCandidateAreaFromLayer();
+				deleteCandidateArea();
+			}
+			
+			clearControls();
+		}
+	);
+	$('#addSelection').prop("disabled", true);
+	
+	$('#clearSelection').click(
+		function()
+		{
+			$('#selectedItems').text('');
+			clearControls();
+
+			removeAllSelectedArea();
+			removeCandidateAreaFromLayer();
+			deleteCandidateArea();
+			
+			selectedAreaKeys.length = 0;
+		}
+	);
+}
+
+function addSelectedItem()
+{
+	var sidoIndex = $('#sido option:selected').index();
+	if(sidoIndex == 0)
+		return false;
+	
+	var sggIndex = $('#sgg option:selected').index();
+	var umdIndex = $('#umd option:selected').index();
+	
+	var thisKey = sidoIndex * 100 + sggIndex * 10 + umdIndex;
+	for(var key in selectedAreaKeys)
+	{
+		if(thisKey == selectedAreaKeys[key])
+			return false;
+	}
+
+	var title = '';
+	
+	title += sidoData[sidoIndex-1].name;
+
+	if(sggIndex != 0)
+		title += ' ' + sggData[sggIndex-1].name;
+
+	if(umdIndex != 0)
+		title += ' ' + umdData[umdIndex-1].name;
+	
+	var previousItems = $('#selectedItems').text();
+	if(previousItems.length > 0)
+		title = previousItems + ', ' + title;
+
+	$('#selectedItems').text(title);
+	
+	selectedAreaKeys.push(thisKey);
+	
+	return true;
+}
+
+function clearControls()
+{
+	$('#sido option:eq(0)').prop('selected', 'selected');
+	
+	$('#sgg').empty();
+	$('#sgg').append('<option selected="selected">선택없음</option>');
+	$('#sgg').prop('disabled', true);
+	
+	$('#umd').empty();
+	$('#umd').append('<option selected="selected">선택없음</option>');
+	$('#umd').prop('disabled', true);
+	
+	$('#addSelection').prop("disabled", true);
+}
+
+function geometryArriven(data)
+{
+	bGeometryArriven = true;
+	$('#addSelection').prop("disabled", false);
+	
+	registerCandidateArea(data);
+	addCandidateAreaToLayer();
+	
+	if(isAnySelectedArea())
+		fitToBothSelectedAndCandidateArea();
+	else
+		fitToCandidateArea();
+}
+
+function prepareSelectors()
+{
+	$('#sido').change(
+		function()
+		{
+			var index = $('#sido option:selected').index();
+			
+			$('#sgg').empty();
+			$('#sgg').append('<option selected="selected">선택없음</option>');
+			$('#sgg').prop('disabled', true);
+			
+			$('#umd').empty();
+			$('#umd').append('<option selected="selected">선택없음</option>');
+			$('#umd').prop('disabled', true);
+
+			if(index == 0)
+			{
+				removeCandidateAreaFromLayer();
+				deleteCandidateArea();
+				$('#addSelection').prop("disabled", true);
+				return;
+			}
+			
+			requestGeometry();
+
+			$.ajax({
+				url: "/sdmc/nfsd/sggs.ngii",
+				type: "GET",
+				dataType: "json",
+				data: "sidoCode="+sidoData[index-1].sidoCode,
+				async: true,
+				success: sggDataArriven,
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			});
+		}
+	);
+	$('#sido').append('<option selected="selected">선택없음</option>');
+	
+	$('#sgg').change(
+		function()
+		{
+			var index = $('#sgg option:selected').index();
+			
+			$('#umd').empty();
+			$('#umd').append('<option selected="selected">선택없음</option>');
+			$('#umd').prop('disabled', true);
+			
+			requestGeometry();
+			
+			if(index == 0)
+				return;
+
+			$.ajax({
+				url: "/sdmc/nfsd/umds.ngii",
+				type: "GET",
+				dataType: "json",
+				data: "sidoCode="+sggData[index-1].parentSidoCode+"&sggCode="+sggData[index-1].sggCode,
+				async: true,
+				success: umdDataArriven,
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			});
+		}
+	);
+	$('#sgg').append('<option selected="selected">선택없음</option>');
+	$('#sgg').prop('disabled', true);
+	
+	$('#umd').change(
+		function()
+		{			
+			requestGeometry();
+		}
+	);
+	$('#umd').append('<option selected="selected">선택없음</option>');
+	$('#umd').prop('disabled', true);
+	
+	$.ajax({
+		url: "/sdmc/nfsd/sidos.ngii",
+		type: "GET",
+		dataType: "json",
+		async: true,
+		success: sidoDataArriven,
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert(errorThrown);
+		}
+	});
+}
+
+function umdDataArriven(data)
+{
+	umdData = data;
+	
+	makeUmdSelector(data);
+}
+
+function makeUmdSelector(data)
+{
+	$("#umd").empty();
+	$("#umd").prop('disabled', false);
+	$("#umd").append('<option selected="selected">선택없음</option>');
+	
+	if(data == null || data.length == 0)
+		return;
+
+	for(var umd in data)
+	{
+		var option = "<option value='" + data[umd].umdCode + "'>" + data[umd].name + "</option>";
+		$("#umd").append($(option));
+	}
+}
+
+function sggDataArriven(data)
+{
+	sggData = data;
+	
+	trimSggNames(sggData);
+	
+	makeSggSelector(sggData);	
+}
+
+function trimSggNames(sggData)
+{
+	var tempSggData = [];
+	for(var sgg in sggData)
+	{
+		if(sggData[sgg].sggCode.substring(2) == '0')
+		{
+			tempSggData.push(sggData[sgg]);
+			for(var otherSgg in sggData)
+			{
+				if(sgg == otherSgg)
+					continue;
+				
+				if(sggData[otherSgg].sggCode.substring(0, 2) == sggData[sgg].sggCode.substring(0, 2))
+				{
+					sggData[otherSgg].name = sggData[sgg].name + ' ' + sggData[otherSgg].name;
+					tempSggData.push(sggData[otherSgg]);
+				}
+			} 
+		}
+	}
+	
+	sggData.length = 0;
+	for(var sgg in tempSggData)
+		sggData.push(tempSggData[sgg]);
+}
+
+function makeSggSelector(data)
+{
+	$("#sgg").empty();
+	$("#sgg").prop('disabled', false);
+	$("#sgg").append('<option selected="selected">선택없음</option>');
+	
+	if(data == null || data.length == 0)
+		return;
+
+	for(var sgg in data)
+	{
+		var option = "<option value='" + data[sgg].sggCode + "'>" + data[sgg].name + "</option>";
+		$("#sgg").append($(option));
+	}
+}
+
+function sidoDataArriven(data)
+{
+	sidoData = data;
+	
+	makeSidoSelector(data);
+}
+
+function makeSidoSelector(data)
+{
+	if(data.length == 0)
+		return;
+
+	var select = $("#sido");
+	for(var sido in data)
+	{
+		//console.log(data[sido]);
+		var option = "<option value='" + data[sido].sidoCode + "'>" + data[sido].name + "</option>";
+		select.append($(option));
+	}
+
+}
+
+function requestGeometry()
+{
+	var sidoIndex = $('#sido option:selected').index();
+	if(sidoIndex == 0)
+		return;
+	
+	bGeometryArriven = false;
+	
+	var sggIndex = $('#sgg option:selected').index();
+	var umdIndex = $('#umd option:selected').index();
+	
+	var targetUrl = null;
+	var targetBjcd = null;
+	if(sggIndex != 0) // sgg item is selected
+	{
+		if(umdIndex != 0) // sido, sgg, umd defined.
+		{
+			// url & param for umd geometry
+			targetUrl = "/sdmc/nfsd/umdGeometry.ngii"
+			targetBjcd = umdData[umdIndex-1].bjcd;
+		}
+		else	// sido, sgg defined
+		{
+			// url & param for sgg geometry
+			targetUrl = "/sdmc/nfsd/sggGeometry.ngii"
+			targetBjcd = sggData[sggIndex-1].bjcd;
+		}
+	}
+	else	// sido defined
+	{
+		// url & param for sido geometry
+		targetUrl = "/sdmc/nfsd/sidoGeometry.ngii"
+		targetBjcd = sidoData[sidoIndex-1].bjcd;
+	}
+	$.ajax({
+		url: targetUrl,
+		type: "GET",
+		dataType: "json",
+		data: "bjcd="+targetBjcd,
+		async: true,
+		success: geometryArriven,
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert(errorThrown);
+		}
+	});
+}
+
+function onLoad()
+{
+	prepareControls();
+	onReady();
+}
+
+$(document).ready(onLoad);
+
+</script>
+
+</head>
+<body>
+
+<div id="main" class="contents">
+<select id="sido"></select>
+<select id="sgg"></select>
+<select id="umd"></select>
+<button id="addSelection" type="button">add</button><button id="clearSelection" type="button">clear</button><br/>
+<p id="selectedItems"></p>
+</div>
+
+
+<div id="map" class="map"></div> 
+</body>
+</html>

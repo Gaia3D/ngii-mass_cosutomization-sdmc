@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ <mapper namespace="kr.ngii.pilot.sdmc.tx.nfsd.service.dao.NfsdSidoDao">
+ 	<select id="selectAllSidos" resultType="sido">
+        SELECT  name,
+        		bjcd,
+                substr(bjcd, 1, 2) as sidoCode
+        FROM nfsd.nf_a_g01102_lite
+        ORDER BY bjcd 
+    </select>
+    <select id="selectGeometry" resultType="String">
+        SELECT  ST_AsGeoJSON(ST_Transform(wkb_geometry, 4326))
+        FROM	nfsd.nf_a_g01102_lite
+        WHERE	bjcd = #{bjcd}
+    </select>
+ </mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="sido" type="kr.ngii.pilot.sdmc.tx.nfsd.service.vo.NfsdSidoVO"/>
+		<typeAlias alias="sgg" type="kr.ngii.pilot.sdmc.tx.nfsd.service.vo.NfsdSggVO"/>
+		<typeAlias alias="umd" type="kr.ngii.pilot.sdmc.tx.nfsd.service.vo.NfsdUmdVO"/>
+
+	</typeAliases>
+	<mappers>
+		<mapper resource ="sqlmap/mappers/nfsd/nfsd_sido_sql.xml"/>
+		<mapper resource ="sqlmap/mappers/nfsd/nfsd_sgg_sql.xml"/>
+		<mapper resource ="sqlmap/mappers/nfsd/nfsd_umd_sql.xml"/>
+	</mappers>
+</configuration>

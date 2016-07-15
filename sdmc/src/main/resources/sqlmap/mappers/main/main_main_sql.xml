@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ <mapper namespace="kr.ngii.pilot.sdmc.main.service.dao.MainDao">
+ 
+ 	<select id="selectLayerList" resultType="layer">
+        SELECT  layer_id
+        		,layer_name
+        		,layer_name_eng
+        		,layer_upper_id
+        		,layer_upper_name
+        		,layer_use_yn
+        		,reg_dt
+        		,reg_user_id
+        FROM odr_prd.layer_info
+		WHERE	layer_use_yn = 'Y'
+				<if test="layerId != null">
+		  AND	layer_id = #{layerId}
+				</if>
+		
+        order by COALESCE(layer_upper_id, layer_id), layer_id
+    </select>
+ 
+ 	<select id="selectFormatList" resultType="format">
+        SELECT  cmcd		format_cd
+        		,cmcd_name	format_name
+        FROM odr_prd.common_code
+        WHERE 1=1
+          AND cmcd_parent_cd = 'fileformat'
+        order by cmcd_order 
+    </select>
+ 
+ 	<select id="selectSrsList" resultType="srs">
+        SELECT  cmcd		srs_cd
+        		,cmcd_name	srs_name
+        FROM odr_prd.common_code
+        WHERE 1=1
+          AND cmcd_parent_cd = 'EPSG'
+        order by cmcd_order     </select>
+
+ 	<select id="selectDoyeupList" resultType="doyeup">
+        SELECT  dycd	doyeup_id
+        		,dynm	doyeup_name
+        		,dynm	doyeup_name_eng
+        		,ST_AsGeoJSON(ST_Transform(wkb_geometry, 4326)) geom
+        FROM cdm_2015.n3a_h0010000
+		<if test="_parameter != null">
+			<where>
+				dycd = #{doyeupId}
+			</where>
+		</if>
+    </select>
+ 
+ </mapper>

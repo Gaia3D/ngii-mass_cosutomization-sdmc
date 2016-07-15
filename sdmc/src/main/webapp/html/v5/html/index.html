@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>공간정보제공시스템</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta name="format-detection" content="telephone=no" />
+<link href="../css/style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>  
+<div id="HeaderWrap">  
+    <div class="header">
+        <h1>공간정보제공시스템</h1>
+        <p class="gnb">
+            <a href="#" class="new">나의 자료목록</a>
+            <a href="#">로그아웃</a>
+        </p>
+    </div>
+</div>
+<!-- END HEADER -->
+  
+    
+<div id="wrap">
+	<h2 class="hide">자료요청</h2>
+	<div class="contents">
+    	<!-- 위치설정 -->
+        <h3>1. 위치를 설정하세요</h3>
+        <div class="section" style="height:410px"> 
+            <h4 style="width:320px" class="h">
+            	행정구역 선택
+                <button type="button" class="ico add">추가</button>
+            </h4>
+            <div class="division">
+                <h5 class="hide">시,도 선택</h5>
+                <ul style="width:110px;">
+                    <li>강원도</li>
+                    <li>경기도</li>
+                    <li>경상남도</li>
+                    <li>경상북도</li>
+                    <li>광주광역시</li>
+                    <li>대구광역시</li>
+                    <li>대전광역시</li>
+                    <li>부산광역시</li>
+                    <li>서울특별시</li>
+                    <li>세종특별자치시</li>
+                    <li>울산광역시</li>
+                </ul>
+                <h5 class="hide">군,구 선택</h5>
+                <ul>
+                    <li>전체</li>
+                    <li>강남구</li>
+                    <li>강동구</li>
+                    <li>강북구</li>
+                    <li>강서구</li>
+                    <li>관악구</li>
+                    <li>광진구</li>
+                    <li>구로구</li>
+                    <li>금천구</li>
+                    <li>노원구</li>
+                    <li>도봉구</li>
+                    <li>동대문구</li>
+                    <li>동작구</li>
+                    <li>마포구</li>
+                    <li>서대문구</li>
+                </ul>
+                <h5 class="hide">지역선택</h5>
+                <ul>
+                    <li>전체</li>
+                    <li>가리봉동</li>
+                    <li>개봉1동</li>
+                    <li>개봉2동</li>
+                    <li>개봉3동</li>
+                    <li>고척1동</li>
+                    <li>고척2동</li>
+                    <li>고척3동</li>
+                    <li>개봉1동</li>
+                    <li>개봉2동</li>
+                    <li>개봉3동</li>
+                    <li>고척1동</li>
+                    <li>고척2동</li>
+                    <li>고척3동</li>
+                </ul>
+            </div>
+            
+            
+            <h4>도로명</h4>
+            <input type="text" class="search" size="35" placeholder="도로명을 입력하세요">
+            <button type="button" class="ico sea">검색</button>
+            
+            <h4>도엽명, 도엽번호</h4>
+            <input type="text" class="search" size="35" placeholder="도엽명, 도엽번호를 입력하세요">
+            <button type="button" class="ico sea">검색</button>
+            <button type="button" class="ico add">추가</button>
+
+            
+            <div class="MapWrap">
+                <h4 class="hide"> 지도에서 선택</h4>
+                <div class="map">
+                	<p class="topright">
+                		<button type="button" class="ico add">추가</button>                
+                    </p>
+                </div>
+            </div>
+            <!-- END MapWrap --> 
+        </div>
+        <!-- END 위치설정 -->
+        
+        
+        <h3>2. 자료의 종류를 선택하세요</h3>
+        <div class="section">
+        	<h4 class="hide">자료의 포맷</h4>
+            <div class="FormatWrap">
+            	<label>Format</label>
+                <select>
+                	<option>Shape + Geo Tiff</option>
+                    <option>GeoPackage</option>
+                    <option></option>
+                </select>
+                
+                <label>SRS</label>
+                <select>
+                	<option>35456667</option>
+                    <option>24567</option>
+                    <option></option>
+                </select>
+            </div>
+                    	
+        	<h4 class="hide">자료의 종류</h4>
+            <div class="typelist">
+                <ul>
+                    <li class="group"><label><input type="checkbox"> 교통</label></li>
+                    <li><label><input type="checkbox"> 도로경계면</label></li>
+                    <li><label><input type="checkbox"> 도로링크</label></li>
+                    <li><label><input type="checkbox"> 도로노드</label></li>
+                    <li><label><input type="checkbox"> 철도경계면</label></li>
+                    <li><label><input type="checkbox"> 철도링크</label></li>
+                    <li><label><input type="checkbox"> 철도노드</label></li>
+                    <li><label><input type="checkbox"> 입체도로</label></li>
+                    <li><label><input type="checkbox"> 교량</label></li>
+                    <li><label><input type="checkbox"> 터널</label></li>
+                    <li><label><input type="checkbox"> 철도승강장</label></li>
+                    <li><label><input type="checkbox"> 인도</label></li>
+                </ul>
+                <ul>
+                    <li class="group"><label><input type="checkbox"> 수계</label></li>
+                    <li><label><input type="checkbox"> 하천경계면</label></li>
+                    <li><label><input type="checkbox"> 하천중심선</label></li>
+                    <li><label><input type="checkbox"> 실폭하천선</label></li>
+                </ul>
+                <ul>
+                    <li class="group"><label><input type="checkbox"> 건축물</label></li>
+                    <li><label><input type="checkbox"> 건물</label></li>
+                </ul>
+                <ul>
+                    <li class="group"><label><input type="checkbox"> 고도</label></li>
+                    <li><label><input type="checkbox"> 등고선</label></li>
+                    <li><label><input type="checkbox"> 표고점</label></li>
+                </ul>
+                <ul>
+                    <li class="group"><label><input type="checkbox"> 경계</label></li>
+                    <li><label><input type="checkbox"> 특별시/광역시/도</label></li>
+                    <li><label><input type="checkbox"> 시/군/구</label></li>
+                    <li><label><input type="checkbox"> 읍/면/동(행정경계)</label></li>
+                    <li><label><input type="checkbox"> 읍/면/동(법정경계)</label></li>
+                </ul>
+                <ul>
+                    <li class="group"><label><input type="checkbox"> 기타</label></li>
+                    <li><label><input type="checkbox"> POI</label></li>
+                    <li><label><input type="checkbox"> 정사영상</label></li>
+                    <li><label><input type="checkbox"> DEM</label></li>
+                    <li><label><input type="checkbox"> 측량기준점</label></li>
+                    <li><label><input type="checkbox"> 지적</label></li>
+                </ul>        
+      		</div>
+        </div>
+        <!-- END 자료의 종류 -->
+        
+       	<h3>3. 시점을 선택하세요</h3>
+        <div class="section">        	
+        	<h4 class="hide">시점</h4>
+            <input type="text" class="search" size="20" placeholder="최신생성자료(기본)">
+            <button type="button" class="ico cal">검색</button>
+            <button type="button" class="ico add">추가</button>      
+        </div>
+        <!-- END 자료의 종류 -->
+        
+        
+    </div>
+    <!-- END CONTENTS -->
+    
+    <div class="ResultSection">
+    	<p class="where">
+        	위치설정
+            <button type="button" class="small">비움</button>
+        </p>
+        <div class="ResultList">
+        	<span>서울특별시 강남구 개포1동<button type="button" class="del">삭제</button></span>
+        	<span>서울특별시 강남구 개포2동<button type="button" class="del">삭제</button></span>
+            <span>서울특별시 강동구 송파2동<button type="button" class="del">삭제</button></span>
+        </div>
+        <!-- END 위치 -->
+        
+        <p class="what">
+        	자료의 종류
+            <button type="button" class="small">비움</button>
+        </p>
+        <!-- 교통 trans, 수계 water, 건축물 build, 고도 eleva, 경계 bound, 기타 etc -->
+        <div class="ResultList">
+            <ul class="trans">
+                <li>도로경계면</li>
+                <li>도로경계선</li>
+                <li>도로단선링크</li>
+                <li>도로복선링크</li>
+                <li>도로복선노드</li>
+                <li>도로단선노드</li>
+                 <li>도로단선링크</li>
+            </ul>
+            <ul class="water">
+                <li>도로경계면</li>
+                <li>도로경계선</li>
+            </ul>  
+        </div>
+        <!-- END 종류 -->
+        
+        <p class="when">
+        	생성시점
+            <button type="button" class="small">비움</button>
+        </p>
+        <div class="ResultList" style="height:50px">
+        	최신생성자료
+        </div>
+        <!-- END 시점 -->
+        <button type="button" class="point">자료요청</button>
+        
+    </div>
+    <!-- END RESULT SECTION -->	
+</div>
+<!-- END WRAP -->  
+ 
+  
+<div class="footer">
+    <div class="copyright">
+        <p>©2016 NGII. All rights reserved. (305-806) 경기도 수원시 영통구 월트컵로 92(원천동)  T. 031-210-2600 </p>
+        <p></p>
+    </div>    
+</div>
+<!-- END FOOTER WRAP --> 
+
+</body>
+</html>
