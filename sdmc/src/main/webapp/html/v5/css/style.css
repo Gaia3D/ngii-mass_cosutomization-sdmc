@@ -691,4 +691,42 @@ background:url(../images/pager.png) no-repeat -69px 0;
 display:none;
 }
 
-
+/* 0715추가 */
+.layer {
+position:absolute;
+top:50%;
+left:50%;
+margin:-150px 0 0 -200px;
+padding:30px;
+width:400px;
+border:3px solid #405775;
+background:#fff;
+}
+.layer h6 {
+height:53px;
+margin-bottom:10px;
+padding:15px 0 0 65px;
+font-size:20px;
+}
+.layer h6.notice {
+background:url(../images/ico_notice.png) no-repeat left 0;
+}
+.layer h6.info {
+background:url(../images/ico_info.png) no-repeat left 0;
+}
+.layer p.text {
+padding-top:20px;
+border-top:1px dotted #5aafef;
+}
+.layer p.layerbtn {
+text-align:center;
+}
+.layer p.layerbtn button {
+margin-top:50px;
+padding:7px 20px;
+border:1px solid #999;
+background-color:#fff;
+}
+.layer p.layerbtn button:hover {
+background-color:#eee;
+}
