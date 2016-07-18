@@ -54,4 +54,24 @@
 		</if>
     </select>
  
+  	<insert id="insertLog" parameterType="log">
+        <selectKey keyProperty="logId" resultType="Integer" order="BEFORE">
+            select COALESCE(max(log_id), 0) + 1  as log_id FROM plugin.sdmc_pg_log
+        </selectKey>
+        INSERT INTO plugin.sdmc_pg_log (
+			log_id
+			,log_kind
+			,log_summary
+			,log_user
+			,reg_dt
+        )VALUES(
+			#{logId}
+			,#{logKind}
+			,#{logSummary}
+			,#{logUser}
+			,now()
+        )
+    </insert>
+
+ 
  </mapper>

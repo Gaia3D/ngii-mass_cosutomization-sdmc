@@ -5,6 +5,7 @@ import java.util.List;
 import kr.ngii.pilot.sdmc.main.service.vo.DoyeupVO;
 import kr.ngii.pilot.sdmc.main.service.vo.FormatVO;
 import kr.ngii.pilot.sdmc.main.service.vo.LayerVO;
+import kr.ngii.pilot.sdmc.main.service.vo.LoggerVO;
 import kr.ngii.pilot.sdmc.main.service.vo.SrsVO;
 
 public interface MainService {
@@ -16,5 +17,7 @@ public interface MainService {
 	public List<SrsVO> getSrsList();
 
 	public List<DoyeupVO> getDoyeupList(String dycd);
+	
+	public void setLogItem(LoggerVO log);
 
 }

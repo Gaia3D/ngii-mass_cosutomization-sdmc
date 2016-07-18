@@ -67,6 +67,11 @@
 <jsp:include page="../import/footer.jsp" />
 </div>
 <!-- END FOOTER WRAP --> 
+ 
+<div class="layer" style="display:none">
+<jsp:include page="../import/notice.jsp" />
+</div>
+<!-- END FOOTER WRAP --> 
 
 </body>
 </html>

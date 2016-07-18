@@ -552,3 +552,12 @@ function displayDoyeupList(result){
 	}
 
 }
+
+
+function openNotice(){
+	$(".layer").show();
+}
+
+function closeNotice(){
+	$(".layer").hide();
+}

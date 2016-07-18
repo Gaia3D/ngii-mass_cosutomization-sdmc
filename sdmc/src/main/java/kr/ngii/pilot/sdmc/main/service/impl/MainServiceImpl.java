@@ -12,6 +12,7 @@ import kr.ngii.pilot.sdmc.main.service.dao.MainDao;
 import kr.ngii.pilot.sdmc.main.service.vo.DoyeupVO;
 import kr.ngii.pilot.sdmc.main.service.vo.FormatVO;
 import kr.ngii.pilot.sdmc.main.service.vo.LayerVO;
+import kr.ngii.pilot.sdmc.main.service.vo.LoggerVO;
 import kr.ngii.pilot.sdmc.main.service.vo.SrsVO;
 
 @Service
@@ -53,6 +54,15 @@ public class MainServiceImpl implements MainService {
 		logger.debug("getSrsList");
 		List<DoyeupVO> list = mainDao.selectDoyeupList(dyCd);
 		return list;
+	}
+
+	@Override
+	public void setLogItem(LoggerVO log) {
+		logger.debug("log writing...");
+		
+		mainDao.insertLog(log);
+		// TODO Auto-generated method stub
+		
 	}
 
 

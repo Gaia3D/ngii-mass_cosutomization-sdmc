@@ -14,6 +14,7 @@ import java.util.Locale;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.ngii.pilot.sdmc.main.service.MainService;
+import kr.ngii.pilot.sdmc.main.service.vo.LoggerVO;
 import kr.ngii.pilot.sdmc.tx.order.service.OrderService;
 import kr.ngii.pilot.sdmc.tx.order.service.vo.OrderVO;
 import kr.ngii.pilot.sdmc.tx.order.service.vo.OutputInfoVO;
@@ -40,8 +43,9 @@ public class OrderController {
 	
 	@Autowired
 	OrderService orderService;
-	//DataProcessService dataProcessService;
-	
+
+	@Autowired
+	MainService mainService;
 	
 	/**
 	 * selectOption
@@ -81,6 +85,8 @@ public class OrderController {
 		if(StringUtil.isEmpty(email)){
 			return "main/myPage";
 		} else {
+
+
 			
 			//orderVO.setOrderDate(orderVO.getOrderDate());
 			String strTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
@@ -96,6 +102,13 @@ public class OrderController {
 			try {
 				result = orderService.putOrderItem(orderVO);
 			} catch (Exception e) {
+				
+				
+				LoggerVO log = new LoggerVO();
+				log.setLogKind("O");	// "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
+				log.setLogSummary(email + " ordered : " + orderVO.getOrderId());
+				log.setLogUser(email);
+				mainService.setLogItem(log);
 				
 				logger.debug("orderId (" + orderVO.getOrderId() + ") : error ");
 				e.printStackTrace();
@@ -144,7 +157,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/download.ngii")
-	public @ResponseBody void downloadData(HttpServletResponse response, String orderId) throws IOException
+	public @ResponseBody void downloadData(HttpServletRequest request, HttpServletResponse response, String orderId) throws IOException
 	{
 		OutputInfoVO outputInfo = orderService.getOutputInfo(orderId);
 		String filePath = outputInfo.getOutputInternalPath();
@@ -152,6 +165,13 @@ public class OrderController {
 		
 		// TODO - khj : local에서 테스트 하기 위해 임시로 만든 파일 경로
 		//filePath = "G:/temp/output/data.zip";
+		
+		String email = (String) request.getSession().getAttribute("userEmail");
+		LoggerVO log = new LoggerVO();
+		log.setLogKind("D");	// "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
+		log.setLogSummary(email + " downloaded : " + orderId);
+		log.setLogUser(email);
+		mainService.setLogItem(log);
 		
 		File downfile = new File(filePath);
 		ServletOutputStream outStream = null;

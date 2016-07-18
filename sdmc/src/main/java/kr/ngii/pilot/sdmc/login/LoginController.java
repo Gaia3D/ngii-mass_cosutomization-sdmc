@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ngii.pilot.sdmc.login.service.LoginService;
+import kr.ngii.pilot.sdmc.main.service.MainService;
+import kr.ngii.pilot.sdmc.main.service.vo.LoggerVO;
 import kr.ngii.pilot.sdmc.util.StringUtil;
 
 /**
@@ -29,6 +31,10 @@ public class LoginController {
 
 	@Autowired
 	LoginService loginService = null; 
+	
+
+	@Autowired
+	MainService mainService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -95,6 +101,12 @@ public class LoginController {
 			if(!StringUtil.isEmpty(identifiedEmail)){
 				session.setAttribute("userEmail", identifiedEmail);
 				
+				LoggerVO log = new LoggerVO();
+				log.setLogKind("L");	// "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
+				log.setLogSummary(identifiedEmail + " login");
+				log.setLogUser(identifiedEmail);
+				mainService.setLogItem(log);
+				
 				// 세션 타임아웃 설정
 				session.setMaxInactiveInterval(30 * 60);
 			}
@@ -134,21 +146,24 @@ public class LoginController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		
-		
-		
 		HttpSession session = request.getSession();
-		//session.setAttribute("userEmail", null);
+		
+		LoggerVO log = new LoggerVO();
+		log.setLogKind("Q");	// "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
+		log.setLogSummary(session.getAttribute("userEmail") + " logout");
+		log.setLogUser((String)session.getAttribute("userEmail"));
+		mainService.setLogItem(log);
+		
 		session.removeAttribute("userEmail");
-		//session.invalidate();
-		//SecurityContextHolder.get
-		//session.setMaxInactiveInterval(0);
+
 		if(session != null){
 			session.invalidate();
 		}
 		
 		session = null;
 		System.gc();
+		
+		
 		
 		model.addAttribute("serverTime", formattedDate );
 		
