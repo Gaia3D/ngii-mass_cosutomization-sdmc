@@ -14,6 +14,7 @@
         <typeAlias alias="srs" type="kr.ngii.pilot.sdmc.main.service.vo.SrsVO"/>
         <typeAlias alias="doyeup" type="kr.ngii.pilot.sdmc.main.service.vo.DoyeupVO"/>
         <typeAlias alias="log" type="kr.ngii.pilot.sdmc.main.service.vo.LoggerVO"/>
+        <typeAlias alias="notice" type="kr.ngii.pilot.sdmc.main.service.vo.NoticeVO"/>
 
         <typeAlias alias="order" type="kr.ngii.pilot.sdmc.tx.order.service.vo.OrderVO"/>
         <typeAlias alias="product" type="kr.ngii.pilot.sdmc.tx.order.service.vo.ProductVO"/>

@@ -20,6 +20,7 @@ import kr.ngii.pilot.sdmc.main.service.MainService;
 import kr.ngii.pilot.sdmc.main.service.vo.DoyeupVO;
 import kr.ngii.pilot.sdmc.main.service.vo.FormatVO;
 import kr.ngii.pilot.sdmc.main.service.vo.LayerVO;
+import kr.ngii.pilot.sdmc.main.service.vo.NoticeVO;
 import kr.ngii.pilot.sdmc.main.service.vo.SrsVO;
 
 /**
@@ -178,6 +179,30 @@ public class MainController {
 		//model.addAttribute("layerList", layerList );
 		
 		return layerList;
+	}
+	
+	/**
+	 * getNoticeItem
+	 * 레이어들의 목록을 반환한다.
+	 * @param none
+	 * @return indexPage 경로
+	 */
+	@RequestMapping(value = "/getNoticeItem.ngii", method = RequestMethod.GET)
+	public @ResponseBody Object getNoticeItem(Locale locale, Model model, String userId) {
+		
+		logger.debug("getNoticeItem.controller");
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		List<NoticeVO> noticeList = mainService.getNoticeList(userId);
+		
+		model.addAttribute("serverTime", formattedDate );
+		//model.addAttribute("layerList", layerList );
+		
+		return noticeList;
 	}
 	
 }

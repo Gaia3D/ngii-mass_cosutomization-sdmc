@@ -19,7 +19,7 @@ $(document).ready(function() {
 // init 콜백함수
 function socialInitFn_(params) {
     if (typeof params != 'undefined' && params.socialState) {
-        console.log(params.responseData);
+        //console.log(params.responseData);
     }
 }
 // 구글 플러스 로그인 버튼 이벤트
@@ -37,7 +37,7 @@ function googleLoginFn() {
 // 리턴 값 중 responseData 값으로 원하는 처리를 한다.
 function googleLoginFn_(params) {
     if (typeof params != 'undefined' && params.socialState) {
-        console.log(params.responseData);
+        //console.log(params.responseData);
     }
 }
 // 로그인 버튼 이벤트
@@ -53,6 +53,6 @@ function facebookLoginFn() {
 // 로그인 후 처리하는 함수
 function facebookLoginFn_(params) {
     if (typeof params != 'undefined' && params.socialState) {
-        console.log(params.responseData);
+        //console.log(params.responseData);
     }
 }

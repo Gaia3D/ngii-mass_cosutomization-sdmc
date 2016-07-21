@@ -14,7 +14,7 @@ function goSubMenu(idx, path){
 		//removeAllMapDifferences();
 		//removeAllOrderArea();
 	} catch(e){
-		console.log(e);
+		//console.log(e);
 	}
 	
 	changeTopMenu(idx);
@@ -303,7 +303,7 @@ function requestNewOrder(dataObj){
 	$(dataObj).removeClass("new");
 	//$(cloneObj).find("a").removeClass("new");
 	
-	console.log(cloneObj);
+	//console.log(cloneObj);
 	
 	var orderId = $(cloneObj).find("input[name='dataId']").val();
 	var userId = userEmail;
@@ -536,7 +536,7 @@ function displaySrsList(result) {
 }
 
 function displayDoyeupList(result){
-	console.log(result);
+	//console.log(result);
 	
 	var cnt = result.length;
 	if(cnt == 1){
@@ -555,6 +555,30 @@ function displayDoyeupList(result){
 
 
 function openNotice(){
+	$.ajax({
+		url : "/sdmc/getNoticeItem.ngii?userId=" + userEmail,
+		type : "GET",
+		dataType : "json",
+		async : true,
+		success : showNotice,
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			//alert(errorThrown);
+		}
+	});
+}
+
+function showNotice(data){
+	var layer = $(".layer");
+	
+	if(data != null && data.length > 0){
+		$(layer).find(".info").text(data[0].noticeTitle);
+		$(layer).find(".notice").text(data[0].noticeTitle);
+		$(layer).find(".text").text(data[0].noticeContent);
+	}
+	
+	
+	//console.log(data);
+	
 	$(".layer").show();
 }
 

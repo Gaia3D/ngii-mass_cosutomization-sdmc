@@ -191,7 +191,7 @@ function addSelectedAreaItem()
 	}
 	else
 	{
-		console.log("unsupported order type");
+		//console.log("unsupported order type");
 	}
 
 	for(var key in selectedAreaKeys)
@@ -206,8 +206,9 @@ function addSelectedAreaItem()
 		areaName = makeAreaName(selectedSidoIndex, selectedSggIndex, selectedUmdIndex);
 	else if(orderType == 1)
 		areaName = thisKey;
-	else
-		console.log("unsupported order type");
+	else{
+		//console.log("unsupported order type");
+	}
 
 	$("#areaSelected").append('<span value="' + thisKey + '">' + areaName + '<button type="button" class="del">삭제</button></span>');
 	$('#areaSelected span:last button').click(			
@@ -533,7 +534,7 @@ function geometryArriven(data, orderType)
 	}
 	else
 	{
-		console.log("invalid usage of this function : geometryArriven");
+		//console.log("invalid usage of this function : geometryArriven");
 		return;
 	}
 
@@ -697,7 +698,7 @@ function selectAllLayers(className)
 	var ulIndex = -1;
 	ulIndex = preSetupSelectedGroup(className);
 	
-	console.log("added item index : " + ulIndex);
+	//console.log("added item index : " + ulIndex);
 
 	$("#typeSelected ul:eq(" + ulIndex + ")").empty();
 	var layerName, layerCode;
@@ -721,7 +722,7 @@ function unselectAllLayers(className)
 	var ulIndex = -1;
 	ulIndex = findSelectedGroup(className);
 	
-	console.log("index to be removed : " + ulIndex);
+	//console.log("index to be removed : " + ulIndex);
 	if(ulIndex != -1)
 		$("#typeSelected ul:eq(" + ulIndex + ")").remove();
 	
@@ -789,7 +790,7 @@ function addLayerToSelectionContainer(layerName, layerCode)
 	if(targetIndex == -1){
 		selectedLayers.push(layerName);
 		selectedLayerCds.push(layerCode);
-		console.log(layerName + layerCode);
+		//console.log(layerName + layerCode);
 		
 	}
 }
@@ -1049,7 +1050,7 @@ function getFinalSelectedArea(areaCodeArray)
 	}
 	else
 	{
-		console.log("unsupported order type");
+		//console.log("unsupported order type");
 		return null;
 	}
 }
@@ -1163,6 +1164,8 @@ function onLoad()
 	getLayerList();
 	
 	prepareDateSelectionControls();
+	
+	openNotice();
 	</c:if>
 	<c:if test="${param.page == 'mypg'}">
 	onReadyMypg();

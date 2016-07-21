@@ -25,11 +25,20 @@
 
 %>
     <div class="header">
+
         <h1><span onclick="goPage('main/main');return false;">맞춤형 공간정보제공시스템</span></h1>
         <p class="gnb">
-        	<a><%=userEmail %> 님 접속중입니다.</a>
             <a href="#" id="navMypg" class="new" onclick="goPage('main/myPage');return false;">나의 자료목록</a>
-            <a href="#" onclick="logout();return false;">로그아웃</a>
         </p>
+        <!-- 로그아웃 -->
+        <p class="login">
+        	<span><%=userEmail %></span>님이 접속하셨습니다.
+            <button type="button" class="small" onclick="logout();return false;">로그아웃</button>
+        </p>
+        <!-- 로그인 
+        <p class="login">
+            <button type="button" class="small">로그인</button>
+        </p>
+        -->
     </div>
     

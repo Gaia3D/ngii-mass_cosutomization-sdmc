@@ -73,5 +73,14 @@
         )
     </insert>
 
+ 	<select id="selectNoticeList" resultType="notice">
+        SELECT  notice_title	notice_title
+        		,notice_content	notice_content
+        FROM plugin.sdmc_pg_notice
+		WHERE 1=1
+		   and now() > start_dt
+		   and finish_dt > now()
+       </select>
+ 
  
  </mapper>

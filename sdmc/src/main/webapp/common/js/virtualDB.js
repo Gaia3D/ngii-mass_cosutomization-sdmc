@@ -55,7 +55,7 @@ layerVersionsByMapCode = "layerVersionsByMapCode";
  */
 function insertData(jsonData, keyType)
 {
-	console.log(jsonData);
+	//console.log(jsonData);
 	var strUpdatedData;
 	var strPreviousData = localStorage.getItem(keyType);
 

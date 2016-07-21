@@ -68,10 +68,11 @@
 </div>
 <!-- END FOOTER WRAP --> 
  
-<div class="layer" style="display:none">
+<!-- END NOTICE WRAP --> 
+<div class="layer">
 <jsp:include page="../import/notice.jsp" />
 </div>
-<!-- END FOOTER WRAP --> 
+<!-- END NOTICE WRAP --> 
 
 </body>
 </html>

@@ -87,7 +87,7 @@ var helper = (function() {
           $('#gConnect').show();
       }
 
-      console.log('authResult', authResult);
+      //console.log('authResult', authResult);
     },
 
     /**
@@ -125,7 +125,7 @@ var helper = (function() {
         'userId': 'me'
       }).then(function(res) {
         var profile = res.result;
-        console.log(profile);
+        //console.log(profile);
         $('#profile').empty();
         $('#profile').append(
             $('<p><img src=\"' + profile.image.url + '\"></p>'));

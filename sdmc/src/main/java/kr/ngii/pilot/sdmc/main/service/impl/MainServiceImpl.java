@@ -13,6 +13,7 @@ import kr.ngii.pilot.sdmc.main.service.vo.DoyeupVO;
 import kr.ngii.pilot.sdmc.main.service.vo.FormatVO;
 import kr.ngii.pilot.sdmc.main.service.vo.LayerVO;
 import kr.ngii.pilot.sdmc.main.service.vo.LoggerVO;
+import kr.ngii.pilot.sdmc.main.service.vo.NoticeVO;
 import kr.ngii.pilot.sdmc.main.service.vo.SrsVO;
 
 @Service
@@ -63,6 +64,13 @@ public class MainServiceImpl implements MainService {
 		mainDao.insertLog(log);
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<NoticeVO> getNoticeList(String userId) {
+		logger.debug("getSrsList");
+		List<NoticeVO> list = mainDao.selectNoticeList(userId);
+		return list;
 	}
 
 
