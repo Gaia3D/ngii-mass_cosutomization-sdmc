@@ -98,13 +98,14 @@ function goLogin(url){
 		var uri = "<%=contextRoot%>login.ngii?social="+ sns;
 		
 		// 로그인 회피를 위하여 
-		//window.open(url);
-
 		// 로그인 회피 대신 이름과 email을 입력하여 넘어가야 하므로 직접 입력하고 넘어갈 수 있도록 처리 (직접 입력한다는 점을 제외하면 프로세스는 동일하다!!)
 		//var name = encodeURIComponent(prompt("이름을 입력해 주세요"));
-		var email = encodeURIComponent(prompt("이메일 주소를 입력해 주세요"));
+		//var email = encodeURIComponent(prompt("이메일 주소를 입력해 주세요"));
 
-		location.href = uri + "&name=" + name + "&email=" + email;
+		//location.href = uri + "&name=" + name + "&email=" + email;
+		
+		location.href = uri;
+
 	};
 
 	// 구글+ 로그인 연계....

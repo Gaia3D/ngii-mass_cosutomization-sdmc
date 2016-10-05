@@ -27,9 +27,9 @@
 	</bean>
 			
 	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
-		<property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
-	<!-- 	<property name="scope" value="https://www.googleapis.com/auth/plus.me"/> -->
-		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:48080/sdmc/loginCallback.ngii"/>
+		<property name="scope" value="https://www.googleapis.com/auth/userinfo.email"/>
+		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:40080/sdmc/loginCallback.ngii?social=google"/>
+	<!-- 	<property name="redirectUri" value="http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=google"/> -->
 	</bean>
 	
 	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
@@ -38,8 +38,9 @@
 	</bean>
 		
 	<bean id="facebookOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
-		<property name="scope" value="email public_profile"/>
-		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:48080/sdmc/loginCallback.ngii"/>
+		<property name="scope" value="email"/>
+		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:40080/sdmc/loginCallback.ngii?social=facebook"/>
+	<!-- 	<property name="redirectUri" value="http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=facebook"/> -->
 	</bean>
 	
 	<bean id="daumConnectionFactory" class="org.springframework.social.daum.blog.connect.DaumBlogConnectionFactory">

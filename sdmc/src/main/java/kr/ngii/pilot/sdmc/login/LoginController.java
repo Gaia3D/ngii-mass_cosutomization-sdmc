@@ -53,7 +53,7 @@ public class LoginController {
 		logger.info("Welcome smdc! The client locale is {}.", locale);
 		
 		// TODO - khj : 임시로 소셜 로그인을 막는다. 나중에 소셜 로그인 기능을 구현할거면 제대로 구현 된상태서 막은걸 풀어야 한다.
-		social = "";
+		//social = "";
 
 		String url = loginService.makeLoginValidationUrl(social);
 		
@@ -66,7 +66,7 @@ public class LoginController {
 		{
 			model.addAttribute("email", URLDecoder.decode(email, "UTF-8"));
 		}
-	
+			
 		return "redirect:" + url;
 	}
 	
@@ -92,6 +92,7 @@ public class LoginController {
 			{
 				// TODO - khj : 여기서 인증 받은 이메일 계정을 추출할 것.
 				// identifiedEmail = something;
+				identifiedEmail = loginService.getEmailAddr(social, code);
 			}
 			else	// basic login
 			{
