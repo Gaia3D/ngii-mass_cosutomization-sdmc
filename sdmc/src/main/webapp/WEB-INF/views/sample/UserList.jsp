@@ -64,4 +64,3 @@
             <a href="#" class="nex"><span>다음</span></a>
             <a href="#" class="las"><span>마지막</span></a>
         </div>
-

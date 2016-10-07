@@ -95,7 +95,7 @@ public class LoginServiceImpl implements LoginService{
 				
 				return oauthOperations.buildAuthorizeUrl("", daumOAuth1Parameters);
 			}
-			case "kakao":
+			case "naver":
 			{
 				OAuth2Operations oauthOperations = null;
 				
@@ -169,7 +169,7 @@ public class LoginServiceImpl implements LoginService{
 			{
 				return null;
 			}
-			case "kakao":
+			case "naver":
 			{
 				return null;
 			}
