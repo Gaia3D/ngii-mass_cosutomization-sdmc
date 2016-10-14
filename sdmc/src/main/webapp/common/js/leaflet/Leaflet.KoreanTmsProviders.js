@@ -175,6 +175,7 @@
 			//url: 'http://211.106.171.49//tile/base_map_tile/L{z}/{x}/{y}.png',
 			//url: 'http://172.22.24.249//tile/base_map_tile/L{z}/{x}/{y}.png',
 			url: 'http://192.168.10.38/tiles/base_map_tile/L{z}/{x}/{y}.png',
+			url: 'http://pilot.ngii.go.kr/tiles/base_map_tile/L{z}/{x}/{y}.png',
 			crs: L.Proj.CRS.TMS.NgiiMap,
 			options: {
 				maxZoom: 19,

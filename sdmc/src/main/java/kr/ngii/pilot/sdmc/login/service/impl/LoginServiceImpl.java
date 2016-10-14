@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.daum.blog.api.DaumBlog;
+import org.springframework.social.daum.blog.api.impl.DaumBlogTemplate;
 import org.springframework.social.daum.blog.connect.DaumBlogConnectionFactory;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.FacebookProfile;
@@ -15,16 +17,12 @@ import org.springframework.social.google.api.impl.GoogleTemplate;
 import org.springframework.social.google.api.plus.Person;
 import org.springframework.social.google.api.plus.PlusOperations;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
-import org.springframework.social.kakao.connect.KakaoConnectionFactory;
-import org.springframework.social.oauth1.OAuth1Operations;
-import org.springframework.social.oauth1.OAuth1Parameters;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Service;
 
-import kr.ngii.pilot.sdmc.core.properties.BasicProperties;
 import kr.ngii.pilot.sdmc.login.service.LoginService;
 import kr.ngii.pilot.sdmc.login.service.dao.LoginDao;
 import kr.ngii.pilot.sdmc.login.service.vo.AreaVO;
@@ -42,16 +40,6 @@ public class LoginServiceImpl implements LoginService{
 	private FacebookConnectionFactory facebookConnectionFactory;
 	@Autowired
 	private OAuth2Parameters facebookOAuth2Parameters;
-	
-	@Autowired
-	private KakaoConnectionFactory kakaoConnectionFactory;
-	@Autowired
-	private OAuth2Parameters kakaoOAuth2Parameters;
-	
-	@Autowired
-	private DaumBlogConnectionFactory daumConnectionFactory;
-	@Autowired
-	private OAuth1Parameters daumOAuth1Parameters;
 
 	@Autowired
 	private LoginDao loginDao;
@@ -86,23 +74,17 @@ public class LoginServiceImpl implements LoginService{
 			}
 			case "daum":
 			{
-				OAuth1Operations oauthOperations = null;
-				
-				oauthOperations = daumConnectionFactory.getOAuthOperations();
+				OAuth2Operations oauthOperations = null;
 
-				daumOAuth1Parameters.set("scope", "email");
-				daumOAuth1Parameters.set("callbackUri", BasicProperties.THIS_URL);
+				oauthOperations = googleConnectionFactory.getOAuthOperations();
+				//googleOAuth2Parameters.setRedirectUri("http://osgeo.ipdisk.co.kr:40080/sdmc/loginCallback.ngii?social=daum");
+				googleOAuth2Parameters.setRedirectUri("http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=daum");
 				
-				return oauthOperations.buildAuthorizeUrl("", daumOAuth1Parameters);
+				return oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+				
 			}
 			case "naver":
 			{
-				OAuth2Operations oauthOperations = null;
-				
-				oauthOperations = kakaoConnectionFactory.getOAuthOperations();
-
-				kakaoOAuth2Parameters.setScope("email");
-				return oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, kakaoOAuth2Parameters);
 			}
 			default:
 				return "/loginCallback.ngii";
@@ -167,7 +149,22 @@ public class LoginServiceImpl implements LoginService{
 			}
 			case "daum":
 			{
-				return null;
+				OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+				AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
+				String accessToken = accessGrant.getAccessToken();
+				Long expireTime =  accessGrant.getExpireTime();
+				if (expireTime != null && expireTime < System.currentTimeMillis()) {
+					accessToken = accessGrant.getRefreshToken();
+					//logger.info("accessToken is expired. refresh token = {}" , accessToken);
+				}
+						
+				Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
+				Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
+						
+				PlusOperations plusOperations = google.plusOperations();
+				Person person = plusOperations.getGoogleProfile();
+				
+				return person.getAccountEmail();
 			}
 			case "naver":
 			{

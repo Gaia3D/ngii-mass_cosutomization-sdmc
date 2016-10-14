@@ -1191,7 +1191,7 @@ function onLoad()
 	
 	prepareDateSelectionControls();
 	
-	openNotice();
+	//openNotice();
 	</c:if>
 	<c:if test="${param.page == 'mypg'}">
 	onReadyMypg();

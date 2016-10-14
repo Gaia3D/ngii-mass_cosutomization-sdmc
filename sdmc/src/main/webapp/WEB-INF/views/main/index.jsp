@@ -26,6 +26,8 @@
 		userName = URLDecoder.decode(userName, "UTF-8");
 	
 	String error = request.getParameter("error");
+	
+	String debug = request.getParameter("debug");
 %>
 
 <!DOCTYPE HTML>
@@ -86,8 +88,10 @@ function goLogin(url){
 <div id="LoginWrap">
 	<a href="#" id="my-signin2" class="google" onclick="snsLogin('google');return false;">구글플러스</a>
     <a href="#" class="facebook" onclick="snsLogin('facebook');return false;">페이스북</a>
+    <!-- 
     <a href="#" class="naver" onclick="snsLogin('google');return false;">네이버</a>
     <a href="#" class="daum" onclick="snsLogin('google');return false;">다음</a>
+     -->
 </div>
 <!-- END WRAP --> 
 
@@ -97,15 +101,15 @@ function goLogin(url){
 	function snsLogin(sns){
 		var uri = "<%=contextRoot%>login.ngii?social="+ sns;
 		
+
+<% if ("true".equals(debug)){ %>
 		// 로그인 회피를 위하여 
 		// 로그인 회피 대신 이름과 email을 입력하여 넘어가야 하므로 직접 입력하고 넘어갈 수 있도록 처리 (직접 입력한다는 점을 제외하면 프로세스는 동일하다!!)
-		//var name = encodeURIComponent(prompt("이름을 입력해 주세요"));
-		//var email = encodeURIComponent(prompt("이메일 주소를 입력해 주세요"));
-
-		//location.href = uri + "&name=" + name + "&email=" + email;
-		
+		var email = encodeURIComponent(prompt("이메일 주소를 입력해 주세요"));
+		location.href = uri + "&debug=true&email=" + email;
+<% } else {		%>
 		location.href = uri;
-
+<% } %>
 	};
 
 	// 구글+ 로그인 연계....

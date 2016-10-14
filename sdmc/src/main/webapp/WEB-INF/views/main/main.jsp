@@ -69,7 +69,7 @@
 <!-- END FOOTER WRAP --> 
  
 <!-- END NOTICE WRAP --> 
-<div class="layer">
+<div class="layer" style="display:none;">
 <jsp:include page="../import/notice.jsp" />
 </div>
 <!-- END NOTICE WRAP --> 
