@@ -7,4 +7,8 @@ public interface LoginService {
 	public boolean updateUserOrderHistoryForAfterService(String userId);
 
 	public String getEmailAddr(String code, String snsType);
+
+	public boolean checkSignin(String id, String password);
+
+	public void registUser(String id, String name, String password, String telNo);
 }

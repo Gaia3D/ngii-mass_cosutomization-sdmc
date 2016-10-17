@@ -179,5 +179,38 @@ public class LoginController {
 		
 		return "redirect:/index.ngii";
 	}
+
+	/**
+	 * signin
+	 */
+	@RequestMapping(value = "/signin.ngii")
+	public String signin(String id, String password) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("signin.ngii 컨트롤러를 탔슴둥!!");
+		if(loginService.checkSignin(id, password)){
+			// 만약 로그인이 성공한다면
+			return "redirect:/main.ngii";
+			
+		} else {
+			
+			//로그인이 실패한다면
+			return "redirect:/index.ngii";
+		}
+			
+
+	}
+
+	/**
+	 * signup
+	 */
+	@RequestMapping(value = "/signup.ngii")
+	public String signup(String id, String name, String password, String telNo) {
+		// TODO Auto-generated method stub
+		loginService.registUser(id, name, password, telNo);
+		
+		// 회원 정보를 db에 넣는 과정
+		return "redirect:/index.ngii";
+	}
 	
 }

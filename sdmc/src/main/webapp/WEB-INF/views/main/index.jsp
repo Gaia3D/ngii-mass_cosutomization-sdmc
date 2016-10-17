@@ -88,8 +88,8 @@ function goLogin(url){
 <div id="LoginWrap">
 	<a href="#" id="my-signin2" class="google" onclick="snsLogin('google');return false;">구글플러스</a>
     <a href="#" class="facebook" onclick="snsLogin('facebook');return false;">페이스북</a>
+    <a href="#" class="naver" onclick="idLogin('google');return false;">네이버</a>
     <!-- 
-    <a href="#" class="naver" onclick="snsLogin('google');return false;">네이버</a>
     <a href="#" class="daum" onclick="snsLogin('google');return false;">다음</a>
      -->
 </div>
@@ -114,6 +114,10 @@ function goLogin(url){
 
 	// 구글+ 로그인 연계....
 
+	function idLogin(){
+		var uri = "/sdmc/signin.ngii";
+		location.href=uri;
+	}
 </script>
 </body>
 </html>

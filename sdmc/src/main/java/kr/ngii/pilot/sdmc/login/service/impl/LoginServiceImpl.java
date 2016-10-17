@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.daum.blog.api.DaumBlog;
-import org.springframework.social.daum.blog.api.impl.DaumBlogTemplate;
-import org.springframework.social.daum.blog.connect.DaumBlogConnectionFactory;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.facebook.api.UserOperations;
@@ -26,6 +23,7 @@ import org.springframework.stereotype.Service;
 import kr.ngii.pilot.sdmc.login.service.LoginService;
 import kr.ngii.pilot.sdmc.login.service.dao.LoginDao;
 import kr.ngii.pilot.sdmc.login.service.vo.AreaVO;
+import kr.ngii.pilot.sdmc.login.service.vo.UserVO;
 import kr.ngii.pilot.sdmc.util.StringUtil;
 
 @Service
@@ -81,6 +79,7 @@ public class LoginServiceImpl implements LoginService{
 				googleOAuth2Parameters.setRedirectUri("http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=daum");
 				
 				return oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+				
 				
 			}
 			case "naver":
@@ -219,5 +218,27 @@ public class LoginServiceImpl implements LoginService{
 		}
 		
 		return false;
+	}
+
+	@Override
+	public boolean checkSignin(String id, String password) {
+		// TODO Auto-generated method stub
+		boolean flag = false;
+		List<UserVO> userList = loginDao.selectUserInfo(id, password);
+		
+		if( userList.isEmpty()){
+			//로그인 실패
+			flag = false;
+		} else {
+			//로그인 성공
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public void registUser(String id, String name, String password, String telNo) {
+		// TODO Auto-generated method stub
+		loginDao.insertUserInfo(id, name, password, telNo);
 	}
 }

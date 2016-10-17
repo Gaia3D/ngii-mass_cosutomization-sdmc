@@ -65,4 +65,10 @@
  		   and update_status = '1'
  	</update>
  
+ 	<select id="selectUserInfo">
+ 			
+ 	</select>
+ 	
+ 	<insert id="insertUserInfo">
+ 	</insert>
  </mapper>

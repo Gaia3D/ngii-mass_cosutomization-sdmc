@@ -13,15 +13,15 @@
         <property name="driverClassName" value="org.postgresql.Driver" />
         <!-- 
         <property name="url" value="jdbc:postgresql://172.22.24.249:5432/sdmc" />
-        -->
         <property name="url" value="jdbc:postgresql://210.117.198.100:5432/sdmc" />
         <property name="username" value="ngii" />
         <property name="password" value="0000" />
+        -->
         <!-- 
+         -->
         <property name="url" value="jdbc:postgresql://192.168.10.38:5432/sdmc" />
         <property name="username" value="postgres" />
         <property name="password" value="0000" />
-         -->
     </bean>
 
 	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
