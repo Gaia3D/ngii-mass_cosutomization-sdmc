@@ -8,6 +8,7 @@
     <typeAliases>
         <typeAlias alias="User" type="kr.ngii.pilot.sdmc.sample.model.User"/>
 
+        <typeAlias alias="userinfo" type="kr.ngii.pilot.sdmc.login.service.vo.Uservo"/>
         <typeAlias alias="area" type="kr.ngii.pilot.sdmc.login.service.vo.AreaVO"/>
         <typeAlias alias="layer" type="kr.ngii.pilot.sdmc.main.service.vo.LayerVO"/>
         <typeAlias alias="format" type="kr.ngii.pilot.sdmc.main.service.vo.FormatVO"/>

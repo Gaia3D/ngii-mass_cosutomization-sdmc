@@ -41,6 +41,7 @@
 <meta name="format-detection" content="telephone=no" />
 <link href="<%=contextRoot%>common/css/style.css" type="text/css" rel="stylesheet" />
 <script src="<%=contextRoot%>common/js/jquery-1.12.3.js" ></script>
+<script src="<%=contextRoot%>common/js/common.js" ></script>
 <script>
 
 <c:if test="${param.error == 'access_denied'}">
@@ -65,14 +66,28 @@ function goPage(url){
 	}
 
 	//alert(url);
-	$("#frm input").val(url);
+	$("#nextSubPageName").val(url);
 	$("form#frm")[0].submit();
 
 }
 
-function goLogin(url){
+function goRegistPage(url){
+
+	if(!url){
+		url = 'order/searchPage';
+	}
+
+	//alert(url);
+	$("#nextPageName").val(url);
+	$("form#frm")[0].submit();
+
+}
+
+function goLogin(){
 	
-	window.open(url);
+	//alert(encrypt($("#password").val()));
+	//window.open(url);
+	location.href="<%=contextRoot%>signin.ngii?id=" + $("#email1").val() + "@" + $("#email2").val() + "&password=" + encrypt($("#password").val());
 }
 
 </script>
@@ -81,7 +96,8 @@ function goLogin(url){
 <body style="overflow:hidden">
 
 <form id="frm" name="frm" action="<%=contextRoot%>viewPage.ngii" method="post">
-	<input type="hidden" name="nextPageName" value="" />
+	<input type="hidden" id="nextSubPageName" name="nextSubPageName" value="" />
+	<input type="hidden" id="nextPageName" name="nextPageName" value="" />
 </form>
 
 <div id="LoginWrap">
@@ -90,53 +106,26 @@ function goLogin(url){
     </div>
     <fieldset>
         <p>
-        	<input type="text" size="16" placeholder="이메일"> @
-            <input type="text" size="24">
+        	<input type="text" id="email1" size="16" placeholder="이메일"> @
+            <input type="text" id="email2" size="24">
         </p>
         <p>
-        	<input type="password" size="51" placeholder="패스워드">
+        	<input type="password" id="password" size="51" placeholder="패스워드">
         </p>
         <p>
-        	<button type="button" class="login">로그인</button>
+        	<button type="button" class="login" onclick="goLogin();">로그인</button>
         </p>
     </fieldset>
-	<p class="failed">
+	<p class="failed" style="display:none;">
     	! 입력하신 정보가 맞지않습니다.
     </p>
     
     <p>
     	아직 회원이 아니십니까? 
-        <a href="#" onclick="goPage('main/index_regist');">회원가입 하기</a>
+        <a href="#" onclick="goRegistPage('main/index_regist');">회원가입 하기</a>
     </p>
 </div>
 <!-- END WRAP --> 
 
-
-<<<<<<< HEAD
-=======
-	// 구글+ 로그인 연계....
-	function snsLogin(sns){
-		var uri = "<%=contextRoot%>login.ngii?social="+ sns;
-		
-
-<% if ("true".equals(debug)){ %>
-		// 로그인 회피를 위하여 
-		// 로그인 회피 대신 이름과 email을 입력하여 넘어가야 하므로 직접 입력하고 넘어갈 수 있도록 처리 (직접 입력한다는 점을 제외하면 프로세스는 동일하다!!)
-		var email = encodeURIComponent(prompt("이메일 주소를 입력해 주세요"));
-		location.href = uri + "&debug=true&email=" + email;
-<% } else {		%>
-		location.href = uri;
-<% } %>
-
-	};
-
-	// 구글+ 로그인 연계....
-
-	function idLogin(){
-		var uri = "/sdmc/signin.ngii";
-		location.href=uri;
-	}
-</script>
->>>>>>> branch 'master' of https://github.com/Gaia3D/ngii-mass_customization-sdmc.git
 </body>
 </html>

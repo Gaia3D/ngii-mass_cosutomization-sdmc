@@ -21,7 +21,6 @@ import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ngii.pilot.sdmc.login.service.LoginService;
 import kr.ngii.pilot.sdmc.login.service.dao.LoginDao;
@@ -226,12 +225,13 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public boolean checkLogin(String id, String password) {
+	public boolean checkLogin(Uservo user) {
 		// TODO Auto-generated method stub
 		boolean tf = false;
 		
-		List<Uservo> list = loginDao.selectInformation(id, password);
-		if(list.isEmpty()){
+		List<Uservo> list = null;
+		//list = loginDao.selectInformation(user);
+		if(false && list.isEmpty()){
 		tf = false;
 		}
 		else{

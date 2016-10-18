@@ -65,10 +65,10 @@
  		   and update_status = '1'
  	</update>
  	
- 	<select id = "selectInformation">
+ 	<select id = "selectInformation" parameterType="userinfo">
  	select * from = plugin.sdmc_pg_user user
- 	where user =#{email}
- 	and user = #{password}
+ 	where user.email = #{id}
+ 	and user.password = #{password}
  	</select>
  	
  	<insert id="insertInformation">

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.ngii.pilot.sdmc.login.service.LoginService;
+import kr.ngii.pilot.sdmc.login.service.vo.Uservo;
 import kr.ngii.pilot.sdmc.main.service.MainService;
 import kr.ngii.pilot.sdmc.main.service.vo.LoggerVO;
 import kr.ngii.pilot.sdmc.util.StringUtil;
@@ -190,14 +191,32 @@ public class LoginController {
 	 */
 	
 	@RequestMapping(value = "/signin.ngii")
-	public String signin(String id, String password, HttpSession session) {
-		if(loginService.checkLogin(id,password))
+	public String signin(String id, String password, HttpSession session
+					,Model model
+					,Uservo user) {
+		//if(loginService.checkLogin(id,password))
+		if(loginService.checkLogin(user))
 		{
 			session.setAttribute("userEmail", id);
-			return "redirect:/main.ngii";
+			LoggerVO log = new LoggerVO();
+			log.setLogKind("L");	// "W" : 사용자 등록, "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
+			log.setLogSummary(id + " login");
+			log.setLogUser(id);
+			mainService.setLogItem(log);
+			
+			model.addAttribute("login", "success");
+			model.addAttribute("error", null );
+
+			// 세션 타임아웃 설정
+			session.setMaxInactiveInterval(30 * 60);
+			loginService.updateUserOrderHistoryForAfterService(id);
 		}else{
-			return "redirect:/index.ngii";
+			model.addAttribute("login", "failure" );
+			model.addAttribute("error", error );
+			
 		}
+
+		return "redirect:/index.ngii";
 	}
 	
 		/**
@@ -207,6 +226,12 @@ public class LoginController {
 	@RequestMapping(value = "/signup.ngii")
 	public String singup(String email, String name, String password, String ConfirmPassword, String telNo){
 		loginService.information(email, name, password, ConfirmPassword, telNo);
+		LoggerVO log = new LoggerVO();
+		log.setLogKind("W");	// "W" : 사용자 등록, "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
+		log.setLogSummary(email + " login");
+		log.setLogUser(email);
+		mainService.setLogItem(log);
+		
 		return "redirect:/index.ngii";
 	}
 }
