@@ -213,11 +213,8 @@ public class LoginController {
 			session.setMaxInactiveInterval(30 * 60);
 			loginService.updateUserOrderHistoryForAfterService(id);
 		}else{
-<<<<<<< HEAD
 			model.addAttribute("login", "failure" );
 			model.addAttribute("error", "error" );
-=======
->>>>>>> branch 'master' of https://github.com/Gaia3D/ngii-mass_customization-sdmc.git
 			
 		}
 
