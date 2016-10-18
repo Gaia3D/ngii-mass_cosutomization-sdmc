@@ -110,6 +110,7 @@ function goLogin(url){
 <% } else {		%>
 		location.href = uri;
 <% } %>
+
 	};
 
 	// 구글+ 로그인 연계....

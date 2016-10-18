@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -187,16 +188,19 @@ public class LoginController {
 	/**
 	 * singin
 	 */
+	
 	@RequestMapping(value = "/signin.ngii")
-	public String singin(String id, String password){
+	public String signin(String id, String password, HttpSession session) {
 		if(loginService.checkLogin(id,password))
 		{
+			session.setAttribute("userEmail", id);
 			return "redirect:/main.ngii";
 		}else{
 			return "redirect:/index.ngii";
 		}
 	}
-	/**
+	
+		/**
 	 * sinup
 	 */
 	
@@ -205,5 +209,4 @@ public class LoginController {
 		loginService.information(email, name, password, ConfirmPassword, telNo);
 		return "redirect:/index.ngii";
 	}
-
 }
