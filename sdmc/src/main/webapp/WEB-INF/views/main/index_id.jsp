@@ -44,12 +44,6 @@
 <script src="<%=contextRoot%>common/js/common.js" ></script>
 <script>
 
-<c:if test="${param.error == 'access_denied'}">
-$(document).ready(function(){
-	alert("'SDMC' 애플리케이션에 대한 엑세스 권한 부여를 동의하지 않으면\n 로그인이 불가능합니다.");
-});
-</c:if>
-
 <c:if test="${param.login == 'success'}">
 $(document).ready(function(){
 	if(!("" == "<%=userEmail%>" || "null" == "<%=userEmail%>") ){
@@ -116,9 +110,13 @@ function goLogin(){
         	<button type="button" class="login" onclick="goLogin();">로그인</button>
         </p>
     </fieldset>
-	<p class="failed" style="display:none;">
+    <c:if test="${param.login == 'failure'}">
+	<p class="failed">
     	! 입력하신 정보가 맞지않습니다.
     </p>
+    </c:if>
+
+    </script>
     
     <p>
     	아직 회원이 아니십니까? 

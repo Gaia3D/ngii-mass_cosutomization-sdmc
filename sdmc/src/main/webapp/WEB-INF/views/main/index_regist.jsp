@@ -128,7 +128,7 @@ function goLogin(url){
         </label>
     </p>
     <p class="btnCenter">
-    	<button type="button" class="join" onclick = "checkfield();" onclick = "btn_js_confirm_click();">회원가입</button>
+    	<button type="button" class="join" onclick = "btn_js_confirm_click();">회원가입</button>
         <button type="button" class="cancle" onclick="goPage('main/index_id');">취소</button>
     </p>
     

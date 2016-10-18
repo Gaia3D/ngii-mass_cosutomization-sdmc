@@ -224,19 +224,19 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public boolean checkLogin(String email, String password) {
+	public boolean checkLogin(String id, String password) {
 		// TODO Auto-generated method stub
 		boolean tf = false;
 		
 		List<Uservo> list = null;
 		try{
-			System.out.println(">"+URLEncoder.encode(email, "UTF-8")+"<");
+			System.out.println(">"+URLEncoder.encode(id, "UTF-8")+"<");
 			System.out.println(">"+URLEncoder.encode(password, "UTF-8")+"<");
-			list = loginDao.selectUserList(URLEncoder.encode(email, "UTF-8"), URLEncoder.encode(password, "UTF-8"));
+			list = loginDao.selectUserList(URLEncoder.encode(id, "UTF-8"), URLEncoder.encode(password, "UTF-8"));
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		if( list == null ){
+		if( list == null || list.size() != 1 ){
 			tf = false;
 		}
 		else{

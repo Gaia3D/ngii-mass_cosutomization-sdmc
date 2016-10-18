@@ -605,10 +605,10 @@ function encrypt(theText) {
 
 //joinbtn
 function btn_js_confirm_click(){
-	  var check = confirm("개인정보 수집 및 이용에 동의하며 회원 가입하시겠습니까?");
-	  /* if(check == true) else false */
-	  if(check){goPage('main/index_id')}
-	  else {alert("취소버튼 클릭");}
+	if( checkfield() && confirm("개인정보 수집 및 이용에 동의하며 회원 가입하시겠습니까?")){
+		goPage('main/index_id');
+	}
+	else {alert("취소버튼 클릭");}
 }
 //공백체크
 function checkfield(){

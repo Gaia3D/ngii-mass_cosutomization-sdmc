@@ -22,6 +22,7 @@ import kr.ngii.pilot.sdmc.main.service.vo.FormatVO;
 import kr.ngii.pilot.sdmc.main.service.vo.LayerVO;
 import kr.ngii.pilot.sdmc.main.service.vo.NoticeVO;
 import kr.ngii.pilot.sdmc.main.service.vo.SrsVO;
+import kr.ngii.pilot.sdmc.util.StringUtil;
 
 /**
  * Handles requests for the application home page.
@@ -71,7 +72,7 @@ public class MainController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-		if(nextPageName == null){
+		if(StringUtil.isEmpty(nextPageName)){
 			model.addAttribute("nextSubPageName", nextSubPageName );
 			nextPageName = "main/main";
 		}

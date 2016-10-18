@@ -20,7 +20,7 @@ public interface LoginDao {
 
 	public void insertInformation(String email, String name, String password, String confirmPassword, String telNo);
 
-	public List<Uservo> selectUserList(String email, String password);
+	public List<Uservo> selectUserList(String id, String password);
 
 	
 }

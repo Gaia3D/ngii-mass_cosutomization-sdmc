@@ -10,6 +10,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ngii.pilot.sdmc.login.service.LoginService;
 import kr.ngii.pilot.sdmc.login.service.vo.Uservo;
@@ -32,7 +32,7 @@ import kr.ngii.pilot.sdmc.util.StringUtil;
 public class LoginController {
 
 	@Autowired
-	LoginService loginService = null; 
+	LoginService loginService; 
 	
 
 	@Autowired
@@ -175,11 +175,6 @@ public class LoginController {
 		session = null;
 		System.gc();
 		
-		
-		
-		
-		
-		
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "redirect:/index.ngii";
@@ -189,12 +184,12 @@ public class LoginController {
 	/**
 	 * singin
 	 */	
-	@RequestMapping(value = "/signin.ngii")
+	@RequestMapping(value="/signin.ngii")
 	public String signin(
 					HttpSession session
 					,Model model
-					,@RequestParam(value = "id")String id
-					,@RequestParam(value = "password")String password
+					,@Param(value = "id")String id
+					,@Param(value = "password")String password
 					,Uservo user) {
 		//if(loginService.checkLogin(id,password))
 		if(loginService.checkLogin(id, password))
@@ -220,12 +215,11 @@ public class LoginController {
 
 		return "redirect:/index.ngii";
 	}
+
 	
-		/**
+	/**
 	 * signup
 	 */
-	
-	
 	@RequestMapping(value = "/signup.ngii")
 	public String signup(String email, String name, String password, String ConfirmPassword, String telNo){
 		loginService.information(email, name, password, ConfirmPassword, telNo);

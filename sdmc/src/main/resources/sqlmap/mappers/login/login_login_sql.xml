@@ -65,10 +65,10 @@
  		   and update_status = '1'
  	</update>
  	
- 	<select id="selectUserList">
- 	select * from plugin.sdmc_pg_user
- 	 where email = #{email}
- 	   and password = #{password}
+ 	<select id="selectUserList" parameterType="hashMap" resultType="userinfo">
+	 	select * from plugin.sdmc_pg_user
+	 	 where email = #{0}
+	 	   and password = #{1}
  	</select>
  	
  	<insert id="insertInformation">
