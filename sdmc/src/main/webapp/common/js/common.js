@@ -602,3 +602,59 @@ function encrypt(theText) {
     }
     return output;
 }
+
+//joinbtn
+function btn_js_confirm_click(){
+	  var check = confirm("개인정보 수집 및 이용에 동의하며 회원 가입하시겠습니까?");
+	  /* if(check == true) else false */
+	  if(check){goPage('main/index_id')}
+	  else {alert("취소버튼 클릭");}
+}
+//공백체크
+function checkfield(){
+	if(document.frm.email.value==""&&document.frm.email2.value==""){
+		 alert("이메일을 입력하세요");
+		 document.frm.email.focus();
+		 exit;
+	}
+	
+	else if(document.frm.password.value==""){
+	 alert("비밀번호를 입력하세요");
+	 document.frm.password.focus();
+	 exit;
+	 
+	 }else if(document.frm.password2.value==""){
+	 alert("비밀번호확인을 입력하세요");
+	 document.frm.password2.focus();
+	 exit;
+	 
+	 }else if(document.frm.name.value==""){
+	 alert("이름을 입력하세요");
+	 document.frm.name.focus();
+	 exit;
+	 }else if(document.frm.tel_no.value==""){
+	 alert("핸드폰번호 입력하세요");
+	 document.frm.tel_no.focus();
+	 exit;
+	 }else if(document.frm.checkbox.value==""){
+		 alert("체크박스");
+		 document.frm.checkbox.focus();
+		 exit;
+		 }
+	 if(document.frm.password.value!=document.frm.password2.value){
+	 //비밀번호와 비밀번호확인의 값이 다를 경우
+	 alert("입력한 2개의 비밀번호가 일치하지 않습니다.");
+	 document.frm.pw.focus();
+	 exit;
+	 }
+	 
+	 var exptext = /^[A-Za-z0-9_\.\-]+[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	 if(exptext.test(document.frm.email.value)==false){
+	 //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
+	 
+	 alert("이 메일형식이 올바르지 않습니다.");
+	 document.frm.email.focus();
+	 exit;
+	 }
+	 document.frm.submit();
+}

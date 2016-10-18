@@ -211,8 +211,6 @@ public class LoginController {
 			session.setMaxInactiveInterval(30 * 60);
 			loginService.updateUserOrderHistoryForAfterService(id);
 		}else{
-			model.addAttribute("login", "failure" );
-			model.addAttribute("error", error );
 			
 		}
 
@@ -220,11 +218,12 @@ public class LoginController {
 	}
 	
 		/**
-	 * sinup
+	 * signup
 	 */
 	
+	
 	@RequestMapping(value = "/signup.ngii")
-	public String singup(String email, String name, String password, String ConfirmPassword, String telNo){
+	public String signup(String email, String name, String password, String ConfirmPassword, String telNo){
 		loginService.information(email, name, password, ConfirmPassword, telNo);
 		LoggerVO log = new LoggerVO();
 		log.setLogKind("W");	// "W" : 사용자 등록, "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
