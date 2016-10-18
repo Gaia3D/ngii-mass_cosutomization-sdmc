@@ -41,6 +41,7 @@
 <meta name="format-detection" content="telephone=no" />
 <link href="<%=contextRoot%>common/css/style.css" type="text/css" rel="stylesheet" />
 <script src="<%=contextRoot%>common/js/jquery-1.12.3.js" ></script>
+<script src="<%=contextRoot%>common/js/common.js" ></script>
 <script>
 
 <c:if test="${param.error == 'access_denied'}">
@@ -80,33 +81,31 @@ function goLogin(url){
 
 <body style="overflow:hidden">
 
-<form id="frm" name="frm" action="<%=contextRoot%>viewPage.ngii" method="post">
+<form id="frm" name="frm" action="<%=contextRoot%>signup.ngii" method="post">
 	<input type="hidden" name="nextPageName" value="" />
-</form>
-
 <div id="JoinWrap">
 	<div class="loginTitle">
     	맞춤형 공간정보제공시스템 회원가입
     </div>
     <fieldset>
         <p>
-        	<input type="text" size="31" placeholder="이메일">@
-            <input type="text" size="31">
+        	<input type="text" name = "email" id = "email"size="31" placeholder="이메일"> @
+            <input type="text" name = "email2" id = "email2"size="31">
         </p>
         <p>
-            <input type="password" size="31" placeholder="패스워드">
-            <input type="password" size="31" placeholder="패스워드 확인">
+            <input type="password" name = "password" id = "password" size="31" placeholder="패스워드">
+            <input type="password" name = "password2" id = "password2" size="31" placeholder="패스워드 확인">
         </p>
     </fieldset>
     
     <fieldset>
         <p>
-        	<input type="text" size="31" placeholder="이름">
+        	<input type="text" name = "name" id ="name" size="31" placeholder="이름">
         </p>
         <p>
-            <input type="text" size="10" placeholder="연락처"> -
-            <input type="text" size="10"> -
-            <input type="text" size="10">
+            <input type="text" maxlength="3" size="10" placeholder="연락처"> -
+            <input type="text" maxlength="4" size="10"> -
+            <input type="text" maxlength="4" size="10">
         </p>
     </fieldset>
 
@@ -125,16 +124,17 @@ function goLogin(url){
     </textarea>
     <p>
     	<label>
-        	<input type="checkbox"> 개인수집 및 이용에 동의합니다.
+        	<input type="checkbox" name ="checkbox" id = "checkbox"> 개인수집 및 이용에 동의합니다.
         </label>
     </p>
     <p class="btnCenter">
-    	<button type="button" class="join" onclick="goPage('main/index_id');">회원가입</button>
+    	<button type="button" class="join" onclick = "checkfield();" onclick = "btn_js_confirm_click();">회원가입</button>
         <button type="button" class="cancle" onclick="goPage('main/index_id');">취소</button>
     </p>
+    
 </div>
 <!-- END WRAP --> 
-
+</form>
 </body>
 </html>
 
