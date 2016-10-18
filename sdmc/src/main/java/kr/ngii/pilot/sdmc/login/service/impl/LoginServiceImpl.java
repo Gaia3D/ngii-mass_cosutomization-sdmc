@@ -1,5 +1,7 @@
 package kr.ngii.pilot.sdmc.login.service.impl;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,12 @@ import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.ngii.pilot.sdmc.login.service.LoginService;
 import kr.ngii.pilot.sdmc.login.service.dao.LoginDao;
 import kr.ngii.pilot.sdmc.login.service.vo.AreaVO;
-import kr.ngii.pilot.sdmc.login.service.vo.UserVO;
+import kr.ngii.pilot.sdmc.login.service.vo.Uservo;
 import kr.ngii.pilot.sdmc.util.StringUtil;
 
 @Service
@@ -41,6 +44,8 @@ public class LoginServiceImpl implements LoginService{
 
 	@Autowired
 	private LoginDao loginDao;
+	
+	
 	
 	@Override
 	public String makeLoginValidationUrl(String snsType) {
@@ -221,24 +226,26 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public boolean checkSignin(String id, String password) {
+	public boolean checkLogin(String id, String password) {
 		// TODO Auto-generated method stub
-		boolean flag = false;
-		List<UserVO> userList = loginDao.selectUserInfo(id, password);
+		boolean tf = false;
 		
-		if( userList.isEmpty()){
-			//로그인 실패
-			flag = false;
-		} else {
-			//로그인 성공
-			flag = true;
+		List<Uservo> list = loginDao.selectInformation(id, password);
+		if(list.isEmpty()){
+		tf = false;
 		}
-		return flag;
+		else{
+		tf = true;
+		}
+		return tf;
 	}
 
 	@Override
-	public void registUser(String id, String name, String password, String telNo) {
+	public boolean information(String email,String name, String password, String confirmPassword, String telNo) {
 		// TODO Auto-generated method stub
-		loginDao.insertUserInfo(id, name, password, telNo);
+		loginDao.insertInformation(email, name, password, confirmPassword, telNo);
+		return false;
+
 	}
 }
+

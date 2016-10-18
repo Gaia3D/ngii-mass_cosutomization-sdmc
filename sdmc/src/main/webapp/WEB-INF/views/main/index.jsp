@@ -95,6 +95,8 @@ function goLogin(url){
 </div>
 <!-- END WRAP --> 
 
+
+
 <script type="text/javascript">
 
 	// 구글+ 로그인 연계....

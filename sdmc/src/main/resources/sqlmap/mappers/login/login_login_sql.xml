@@ -64,18 +64,18 @@
  		   and user_id = #{userId}
  		   and update_status = '1'
  	</update>
- 
- 	<select id="selectUserInfo">
- 			select * from plugin.sdmc_pg_user user
- 			 where user.email = #{email}
- 			   and user.password = #{password}
+ 	
+ 	<select id = "selectInformation">
+ 	select * from = plugin.sdmc_pg_user user
+ 	where user =#{email}
+ 	and user = #{password}
  	</select>
  	
- 	<insert id="insertUserInfo">
-	 		insert into plugin.sdmc_pg_user
-	 			(email,password,tel_no,name)
-	 		values 
-	 			(#{email},#{password},#{tel_no},#{name})
- 		
+ 	<insert id="insertInformation">
+ 	insert into plugin.sdmc_pg_user
+ 	(email,password,name,tel_no)
+ 	values
+ 	(#{email},#{password},#{name},#{tel_no})
  	</insert>
+ 	
  </mapper>

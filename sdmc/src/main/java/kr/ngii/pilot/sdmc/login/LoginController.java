@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -175,42 +176,37 @@ public class LoginController {
 		
 		
 		
+		
+		
+		
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "redirect:/index.ngii";
 	}
 
+	
 	/**
-	 * signin
+	 * singin
 	 */
+	
 	@RequestMapping(value = "/signin.ngii")
-	public String signin(String id, String password) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("signin.ngii 컨트롤러를 탔슴둥!!");
-		if(loginService.checkSignin(id, password)){
-			// 만약 로그인이 성공한다면
+	public String signin(String id, String password, HttpSession session) {
+		if(loginService.checkLogin(id,password))
+		{
+			session.setAttribute("userEmail", id);
 			return "redirect:/main.ngii";
-			
-		} else {
-			
-			//로그인이 실패한다면
+		}else{
 			return "redirect:/index.ngii";
 		}
-			
-
-	}
-
-	/**
-	 * signup
-	 */
-	@RequestMapping(value = "/signup.ngii")
-	public String signup(String id, String name, String password, String telNo) {
-		// TODO Auto-generated method stub
-		loginService.registUser(id, name, password, telNo);
-		
-		// 회원 정보를 db에 넣는 과정
-		return "redirect:/index.ngii";
 	}
 	
+		/**
+	 * sinup
+	 */
+	
+	@RequestMapping(value = "/signup.ngii")
+	public String singup(String email, String name, String password, String ConfirmPassword, String telNo){
+		loginService.information(email, name, password, ConfirmPassword, telNo);
+		return "redirect:/index.ngii";
+	}
 }
