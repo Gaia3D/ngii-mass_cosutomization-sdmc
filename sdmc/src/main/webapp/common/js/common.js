@@ -586,19 +586,3 @@ function closeNotice(){
 	$(".layer").hide();
 }
 
-
-function encrypt(theText) {
-    output = new String;
-    Temp = new Array();
-    Temp2 = new Array();
-    TextSize = theText.length;
-    for (i = 0; i < TextSize; i++) {
-        rnd = Math.round(Math.random() * 122) + 68;
-        Temp[i] = theText.charCodeAt(i) + rnd;
-        Temp2[i] = rnd;
-    }
-    for (i = 0; i < TextSize; i++) {
-        output += String.fromCharCode(Temp[i], Temp2[i]);
-    }
-    return output;
-}

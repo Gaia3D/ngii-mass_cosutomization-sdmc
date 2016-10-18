@@ -87,7 +87,7 @@ function goLogin(){
 	
 	//alert(encrypt($("#password").val()));
 	//window.open(url);
-	location.href="<%=contextRoot%>signin.ngii?id=" + $("#email1").val() + "@" + $("#email2").val() + "&password=" + encrypt($("#password").val());
+	location.href="<%=contextRoot%>signin.ngii?id=" + $("#email1").val() + "@" + $("#email2").val() + "&password=" + $("#password").val();
 }
 
 </script>

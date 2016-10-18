@@ -1,7 +1,6 @@
 package kr.ngii.pilot.sdmc.login.service.impl;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,17 +224,23 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public boolean checkLogin(Uservo user) {
+	public boolean checkLogin(String email, String password) {
 		// TODO Auto-generated method stub
 		boolean tf = false;
 		
 		List<Uservo> list = null;
-		//list = loginDao.selectInformation(user);
-		if(false && list.isEmpty()){
-		tf = false;
+		try{
+			System.out.println(">"+URLEncoder.encode(email, "UTF-8")+"<");
+			System.out.println(">"+URLEncoder.encode(password, "UTF-8")+"<");
+			list = loginDao.selectUserList(URLEncoder.encode(email, "UTF-8"), URLEncoder.encode(password, "UTF-8"));
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		if( list == null ){
+			tf = false;
 		}
 		else{
-		tf = true;
+			tf = true;
 		}
 		return tf;
 	}

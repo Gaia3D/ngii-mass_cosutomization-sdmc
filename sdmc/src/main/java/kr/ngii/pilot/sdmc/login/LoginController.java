@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ngii.pilot.sdmc.login.service.LoginService;
 import kr.ngii.pilot.sdmc.login.service.vo.Uservo;
@@ -188,14 +188,16 @@ public class LoginController {
 	
 	/**
 	 * singin
-	 */
-	
+	 */	
 	@RequestMapping(value = "/signin.ngii")
-	public String signin(String id, String password, HttpSession session
+	public String signin(
+					HttpSession session
 					,Model model
+					,@RequestParam(value = "id")String id
+					,@RequestParam(value = "password")String password
 					,Uservo user) {
 		//if(loginService.checkLogin(id,password))
-		if(loginService.checkLogin(user))
+		if(loginService.checkLogin(id, password))
 		{
 			session.setAttribute("userEmail", id);
 			LoggerVO log = new LoggerVO();
@@ -212,7 +214,7 @@ public class LoginController {
 			loginService.updateUserOrderHistoryForAfterService(id);
 		}else{
 			model.addAttribute("login", "failure" );
-			model.addAttribute("error", error );
+			model.addAttribute("error", "error" );
 			
 		}
 
