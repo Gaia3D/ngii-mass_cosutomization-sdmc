@@ -28,6 +28,7 @@ import kr.ngii.pilot.sdmc.core.properties.BasicProperties;
 import kr.ngii.pilot.sdmc.login.service.LoginService;
 import kr.ngii.pilot.sdmc.login.service.dao.LoginDao;
 import kr.ngii.pilot.sdmc.login.service.vo.AreaVO;
+import kr.ngii.pilot.sdmc.login.service.vo.Uservo;
 import kr.ngii.pilot.sdmc.util.StringUtil;
 
 @Service
@@ -55,6 +56,8 @@ public class LoginServiceImpl implements LoginService{
 
 	@Autowired
 	private LoginDao loginDao;
+	
+	
 	
 	@Override
 	public String makeLoginValidationUrl(String snsType) {
@@ -223,4 +226,26 @@ public class LoginServiceImpl implements LoginService{
 		
 		return false;
 	}
+
+	@Override
+	public boolean checkLogin(String id, String password) {
+		// TODO Auto-generated method stub
+		boolean tf = false;
+		List<Uservo> list = loginDao.selectInformation(id, password);
+		if(list.isEmpty()){
+		tf = false;
+		}
+		else{
+		tf = true;
+		}
+		return tf;
+	}
+
+	@Override
+	public boolean information(String email,String name, String password, String confirmPassword, String telNo) {
+		// TODO Auto-generated method stub
+		loginDao.insertInformation(email, name, password, confirmPassword, telNo);
+		return false;
+	}
 }
+

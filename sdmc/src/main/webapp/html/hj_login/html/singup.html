@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<title>맞춤형 공간정보제공시스템</title>
+<link href="../css/style.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<section class="loginform cf">
+<div class = "singup">
+	<form method="post" action="/sdmc/singup.ngill">
+		<p>Email</p><input type="text" name="id" class = "iText" placeholder = "email"><br />
+		<p>Password</p><input type="password" size=10 maxlength=10 name="pwd"class = "password" placeholder = "Password">
+		<p>Confirm Password</p><input type="password" size=10 maxlength=10 name="pwd2"class = "ConfirmPassword" placeholder = "Confirm Password"><br />
+		<p>name</p><input type="text"name="name" placeholder = "name"><br />
+		<script language="javascript" type="text/javascript" >
+
+    // 1. 숫자만 입력받게 하는 방법
+    function onlyNumber() {
+        if ((event.keyCode < 48) || (event.keyCode > 57))
+            event.returnValue = false;
+    }
+
+    function CheckForm() {
+        if (document.getElementById("txtMobile1").value == "") {
+            window.alert("휴대폰 번호를 선택하시오.");
+            return false;
+        }
+        if (document.getElementById("txtMobile2").value.length != 4) {
+            window.alert("가운데 번호는 4자리로 입력하세요");
+        }
+    }
+
+</script>
+
+휴대폰 번호: 
+<select id="txtMobile1">
+    <option value="">::선택::</option>
+    <option value="011">011</option>
+    <option value="016">016</option>
+    <option value="017">017</option>
+    <option value="019">019</option>
+    <option value="010">010</option>
+</select>
+<input type="text" id="txtMobile2" size="4" onkeypress="onlyNumber();" />
+<input type="text" id="txtMobile3" size="4" />
+
+		<input type="submit" value="singup" value="singup"">
+		<input type="reset" value="rewrite">
+	</form>
+</div>
+</section>
+</html>email, name, password, ConfirmPassword, telNo

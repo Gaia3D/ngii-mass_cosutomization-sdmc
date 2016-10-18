@@ -166,9 +166,34 @@ public class LoginController {
 		
 		
 		
+		
+		
+		
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "redirect:/index.ngii";
 	}
 	
+	/**
+	 * singin
+	 */
+	@RequestMapping(value = "/signin.ngii")
+	public String singin(String id, String password){
+		if(loginService.checkLogin(id,password))
+		{
+			return "redirect:/main.ngii";
+		}else{
+			return "redirect:/index.ngii";
+		}
+	}
+	/**
+	 * sinup
+	 */
+	
+	@RequestMapping(value = "/signup.ngii")
+	public String singup(String email, String name, String password, String ConfirmPassword, String telNo){
+		loginService.information(email, name, password, ConfirmPassword, telNo);
+		return "redirect:/index.ngii";
+	}
+
 }

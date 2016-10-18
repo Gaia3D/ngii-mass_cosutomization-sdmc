@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+ cv<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -64,5 +64,18 @@
  		   and user_id = #{userId}
  		   and update_status = '1'
  	</update>
- 
+ 	
+ 	<select id = "selectInformation">
+ 	select * from = plugin.sdmc_pg_user user
+ 	where user =#{email}
+ 	and user = #{password}
+ 	</select>
+ 	
+ 	<insert id="insertInformation">
+ 	insert into plugin.sdmc_pg_user
+ 	(email,password,name,tel_no)
+ 	values
+ 	(#{email},#{password},#{name},#{tel_no})
+ 	</insert>
+ 	
  </mapper>

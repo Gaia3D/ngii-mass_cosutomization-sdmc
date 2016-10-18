@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.ngii.pilot.sdmc.core.annotation.DsApp;
 import kr.ngii.pilot.sdmc.login.service.vo.AreaVO;
+import kr.ngii.pilot.sdmc.login.service.vo.Uservo;
 
 
 @DsApp
@@ -17,4 +18,9 @@ public interface LoginDao {
 
 	public void updateUpdateStatus(AreaVO areaItemVO);
 
+	public void insertInformation(String email, String name, String password, String confirmPassword, String telNo);
+
+	public List<Uservo> selectInformation(String id, String password);
+
+	
 }
