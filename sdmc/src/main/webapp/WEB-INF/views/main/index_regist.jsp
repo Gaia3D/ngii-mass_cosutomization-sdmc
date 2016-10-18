@@ -89,11 +89,11 @@ function goLogin(url){
     </div>
     <fieldset>
         <p>
-        	<input type="text" name = "email" id = "email"size="31" placeholder="이메일"> @
-            <input type="text" name = "email2" id = "email2"size="31">
+        	<input type="text" name = "email" id = "email1" size="31" placeholder="이메일"> @
+            <input type="text" name = "email2" id = "email2" size="31">
         </p>
         <p>
-            <input type="password" name = "password" id = "password" size="31" placeholder="패스워드">
+            <input type="password" name = "password" id = "password1" size="31" placeholder="패스워드">
             <input type="password" name = "password2" id = "password2" size="31" placeholder="패스워드 확인">
         </p>
     </fieldset>
@@ -103,9 +103,9 @@ function goLogin(url){
         	<input type="text" name = "name" id ="name" size="31" placeholder="이름">
         </p>
         <p>
-            <input type="text" maxlength="3" size="10" placeholder="연락처"> -
-            <input type="text" maxlength="4" size="10"> -
-            <input type="text" maxlength="4" size="10">
+            <input type="text" maxlength="3" name="tel1" id="tel1" size="10" placeholder="연락처"> -
+            <input type="text" maxlength="4" name="tel2" id="tel2" size="10"> -
+            <input type="text" maxlength="4" name="tel3" id="tel3" size="10">
         </p>
     </fieldset>
 

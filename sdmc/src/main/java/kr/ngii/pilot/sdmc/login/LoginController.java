@@ -221,11 +221,25 @@ public class LoginController {
 	 * signup
 	 */
 	@RequestMapping(value = "/signup.ngii")
-	public String signup(String email, String name, String password, String ConfirmPassword, String telNo){
-		loginService.information(email, name, password, ConfirmPassword, telNo);
+	public String signup(
+			String email
+			,String email2
+			,String password
+			, String tel1
+			, String tel2
+			, String tel3
+			,Uservo uservo){
+		try {
+			uservo.setEmail(URLEncoder.encode(email + "@" + email2, "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		uservo.setTelNo(tel1 + tel2 + tel3);
+		
+		loginService.information(uservo);
 		LoggerVO log = new LoggerVO();
 		log.setLogKind("W");	// "W" : 사용자 등록, "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
-		log.setLogSummary(email + " login");
+		log.setLogSummary(email + " registed");
 		log.setLogUser(email);
 		mainService.setLogItem(log);
 		

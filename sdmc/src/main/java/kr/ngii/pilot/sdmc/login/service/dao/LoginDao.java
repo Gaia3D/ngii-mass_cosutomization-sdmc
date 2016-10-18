@@ -18,7 +18,7 @@ public interface LoginDao {
 
 	public void updateUpdateStatus(AreaVO areaItemVO);
 
-	public void insertInformation(String email, String name, String password, String confirmPassword, String telNo);
+	public void insertInformation(Uservo uservo);
 
 	public List<Uservo> selectUserList(String id, String password);
 

@@ -246,9 +246,9 @@ public class LoginServiceImpl implements LoginService{
 	}
 
 	@Override
-	public boolean information(String email,String name, String password, String confirmPassword, String telNo) {
+	public boolean information(Uservo uservo) {
 		// TODO Auto-generated method stub
-		loginDao.insertInformation(email, name, password, confirmPassword, telNo);
+		loginDao.insertInformation(uservo);
 		return false;
 
 	}

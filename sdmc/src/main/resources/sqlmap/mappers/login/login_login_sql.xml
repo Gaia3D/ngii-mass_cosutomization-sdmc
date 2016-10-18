@@ -75,7 +75,7 @@
  	insert into plugin.sdmc_pg_user
  		(email,password,name,tel_no)
  	values
- 		(#{email},#{password},#{name},#{tel_no})
+ 		(#{email},#{password},#{name},#{telNo})
  	</insert>
  	
  </mapper>
