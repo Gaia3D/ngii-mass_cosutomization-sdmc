@@ -51,7 +51,8 @@ public class MainController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "main/index";
+		//return "main/index";	// 소셜로그인 차단으로 다른 페이지로 대체
+		return "main/index_id";
 	}
 	
 	/**

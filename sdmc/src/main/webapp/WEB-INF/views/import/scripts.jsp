@@ -21,6 +21,9 @@ var dataOptionList;		// 자료 종류 array
 var dataDate;				// 자료 시점
 var dataForm;				// 자료 형식 
 var fromChange=false;		// 변동정보에서 바로 추가되는 경우
+var surveyPopup = null;		// 설문 팝업
+var filePopup = null;		// 첨부파일 다운로드
+
 
 var userEmail = "<%=session.getAttribute("userEmail")%>";
 
@@ -976,7 +979,30 @@ function loop(func, idx){
 			function()
 			{
 				//location.href="/sdmc/download.ngii?orderId="+orderId;
-				window.location.assign("/sdmc/download.ngii?orderId="+orderId);
+				if(filePopup&&!filePopup.closed){
+					filePopup.close();
+				}
+				if(surveyPopup&&!surveyPopup.closed){
+					surveyPopup.close();
+				}
+				filePopup = null;
+				surveyPopup = null;
+				if(!( filePopup = window.open("/sdmc/download.ngii?orderId="+orderId, "filePopup") )){
+					alert("팝업이 차단되어 있습니다. 신뢰사이트로 등록하시거나 팝업차단을 해제해주시기 바랍니다.");
+				} else if(!(surveyPopup = window.open("https://goo.gl/forms/nlIntrhiFlpR01AG3","surveyPopup"))){
+					alert("팝업이 차단되어 있습니다. 신뢰사이트로 등록하시거나 팝업차단을 해제해주시기 바랍니다.");
+				} else {
+					setTimeout(2000, function(){
+						var popStr = $(filePopup.document).text();
+						console.log("popStr = "+ popStr.length);
+						if(popStr.length > 1){
+							alert("파일 다운로드중 오류가 발생하였습니다. 관리자에게 문의하여 주십시오");
+							surveyPopup.close();
+							filePopup.close();
+						}
+					});
+				}
+				
 			}
 		);
 
@@ -1165,7 +1191,7 @@ function onLoad()
 	
 	prepareDateSelectionControls();
 	
-	openNotice();
+	//openNotice();
 	</c:if>
 	<c:if test="${param.page == 'mypg'}">
 	onReadyMypg();

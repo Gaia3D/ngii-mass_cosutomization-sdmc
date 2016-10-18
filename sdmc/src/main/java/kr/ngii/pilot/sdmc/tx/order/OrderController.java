@@ -187,17 +187,18 @@ public class OrderController {
 		        outStream = response.getOutputStream();
 		        inputStream = new FileInputStream(downfile);               
 		 
-		        //Setting Response Header
-		        response.setContentType("application/octet-stream");
-		        response.setHeader("Content-Disposition",                     
-		                           "attachment;filename=\""+externalName+"\"");
-		              
 		        //Writing InputStream to OutputStream
 		        byte[] outByte = new byte[4096];
 		        while(inputStream.read(outByte, 0, 4096) != -1)
 		        {
 		          outStream.write(outByte, 0, 4096);
 		        }
+
+		        //Setting Response Header
+		        response.setContentType("application/octet-stream");
+		        response.setHeader("Content-Disposition",                     
+		                           "attachment;filename=\""+externalName+"\"");
+		              
 		} catch (FileNotFoundException e) {
 			throw e;
 		} catch (Exception e) {
@@ -206,9 +207,13 @@ public class OrderController {
 			outStream.close();
 			throw new IOException();
 		} finally {
-			inputStream.close();
-			outStream.flush();
-			outStream.close();
+			try{
+				inputStream.close();
+				outStream.flush();
+				outStream.close();
+			} catch(Exception e){
+				
+			}
 		}
 	}
 }

@@ -47,13 +47,15 @@ public class LoginController {
 	 * @return indexPage 경로
 	 */
 	@RequestMapping(value = "/login.ngii", method = RequestMethod.GET)
-	public String login(HttpServletRequest request, Locale locale, Model model, String social, String email, String name)
+	public String login(HttpServletRequest request, Locale locale, Model model, String social, String email, String name, String debug)
 	throws UnsupportedEncodingException
 	{
 		logger.info("Welcome smdc! The client locale is {}.", locale);
 		
-		// TODO - khj : 임시로 소셜 로그인을 막는다. 나중에 소셜 로그인 기능을 구현할거면 제대로 구현 된상태서 막은걸 풀어야 한다.
-		//social = "";
+		if("true".equals(debug)){
+			// TODO - khj : 임시로 소셜 로그인을 막는다. 나중에 소셜 로그인 기능을 구현할거면 제대로 구현 된상태서 막은걸 풀어야 한다.
+			social = "";
+		}
 
 		String url = loginService.makeLoginValidationUrl(social);
 		
@@ -78,56 +80,63 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/loginCallback.ngii")
 	public String loginCallback(HttpServletRequest request, Locale locale, Model model, String code, String social, String error, String name, String email)
-	throws UnsupportedEncodingException
 	{
 		HttpSession session = request.getSession();
 		String identifiedEmail = "";
-
-		if(error == null)
-		{
-			model.addAttribute("login", "success");
-			model.addAttribute("error", null );
-			
-			if(StringUtil.isEmpty(email))// SNS redirection case
+		
+		try {
+			if(error == null)
 			{
-				// TODO - khj : 여기서 인증 받은 이메일 계정을 추출할 것.
-				// identifiedEmail = something;
-				identifiedEmail = loginService.getEmailAddr(social, code);
+				model.addAttribute("login", "success");
+				model.addAttribute("error", null );
+				
+				if(StringUtil.isEmpty(email))// SNS redirection case
+				{
+					// TODO - khj : 여기서 인증 받은 이메일 계정을 추출할 것.
+					// identifiedEmail = something;
+					identifiedEmail = loginService.getEmailAddr(social, code);
+				}
+				else	// basic login
+				{
+					identifiedEmail = URLEncoder.encode(email, "UTF-8");
+				}
+				
+				if(!StringUtil.isEmpty(identifiedEmail)){
+					session.setAttribute("userEmail", identifiedEmail);
+					
+					LoggerVO log = new LoggerVO();
+					log.setLogKind("L");	// "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
+					log.setLogSummary(identifiedEmail + " login");
+					log.setLogUser(identifiedEmail);
+					mainService.setLogItem(log);
+					
+					// 세션 타임아웃 설정
+					session.setMaxInactiveInterval(30 * 60);
+				}
+				
+				loginService.updateUserOrderHistoryForAfterService(identifiedEmail);
 			}
-			else	// basic login
+			else
 			{
-				identifiedEmail = URLEncoder.encode(email, "UTF-8");
+				model.addAttribute("login", "failure" );
+				model.addAttribute("error", error );
 			}
 			
-			if(!StringUtil.isEmpty(identifiedEmail)){
-				session.setAttribute("userEmail", identifiedEmail);
-				
-				LoggerVO log = new LoggerVO();
-				log.setLogKind("L");	// "L" : 로그인,  "D" : 다운로드, "O" : 주문, "Q" : 로그아웃
-				log.setLogSummary(identifiedEmail + " login");
-				log.setLogUser(identifiedEmail);
-				mainService.setLogItem(log);
-				
-				// 세션 타임아웃 설정
-				session.setMaxInactiveInterval(30 * 60);
-			}
+			Date date = new Date();
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 			
-			loginService.updateUserOrderHistoryForAfterService(identifiedEmail);
+			String formattedDate = dateFormat.format(date);
+			model.addAttribute("serverTime", formattedDate );
+			
+			session.setMaxInactiveInterval(this.inteval);
+			
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else
-		{
-			model.addAttribute("login", "failure" );
-			model.addAttribute("error", error );
-		}
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		model.addAttribute("serverTime", formattedDate );
-		
-		session.setMaxInactiveInterval(this.inteval);
-
 		return "redirect:/index.ngii";
 	}
 	
@@ -173,6 +182,7 @@ public class LoginController {
 		
 		return "redirect:/index.ngii";
 	}
+
 	
 	/**
 	 * singin

@@ -11,4 +11,5 @@ public interface LoginService {
 	public boolean checkLogin(String id, String password);
 
 	public boolean information(String email, String name, String password, String confirmPassword, String telNo);
+
 }

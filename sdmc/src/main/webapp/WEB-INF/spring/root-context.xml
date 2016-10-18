@@ -13,8 +13,11 @@
         <property name="driverClassName" value="org.postgresql.Driver" />
         <!-- 
         <property name="url" value="jdbc:postgresql://172.22.24.249:5432/sdmc" />
+        <property name="url" value="jdbc:postgresql://210.117.198.100:5432/sdmc" />
         <property name="username" value="ngii" />
         <property name="password" value="0000" />
+        -->
+        <!-- 
          -->
         <property name="url" value="jdbc:postgresql://192.168.10.38:5432/sdmc" />
         <property name="username" value="postgres" />
@@ -28,8 +31,8 @@
 			
 	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
 		<property name="scope" value="https://www.googleapis.com/auth/userinfo.email"/>
-		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:40080/sdmc/loginCallback.ngii?social=google"/>
-	<!-- 	<property name="redirectUri" value="http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=google"/> -->
+	<!--	<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:40080/sdmc/loginCallback.ngii?social=google"/> -->
+	 	<property name="redirectUri" value="http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=google"/>
 	</bean>
 	
 	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
@@ -39,8 +42,8 @@
 		
 	<bean id="facebookOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
 		<property name="scope" value="email"/>
-		<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:40080/sdmc/loginCallback.ngii?social=facebook"/>
-	<!-- 	<property name="redirectUri" value="http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=facebook"/> -->
+	<!-- 	<property name="redirectUri" value="http://osgeo.ipdisk.co.kr:40080/sdmc/loginCallback.ngii?social=facebook"/> -->
+	 	<property name="redirectUri" value="http://pilot.ngii.go.kr/sdmc/loginCallback.ngii?social=facebook"/>
 	</bean>
 	
 	<bean id="daumConnectionFactory" class="org.springframework.social.daum.blog.connect.DaumBlogConnectionFactory">
