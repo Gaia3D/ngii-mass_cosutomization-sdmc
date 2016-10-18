@@ -84,33 +84,58 @@ function goLogin(url){
 	<input type="hidden" name="nextPageName" value="" />
 </form>
 
-<div id="LoginWrap">
+<div id="JoinWrap">
 	<div class="loginTitle">
-    	맞춤형 공간정보제공시스템
+    	맞춤형 공간정보제공시스템 회원가입
     </div>
     <fieldset>
         <p>
-        	<input type="text" size="16" placeholder="이메일"> @
-            <input type="text" size="24">
+        	<input type="text" size="31" placeholder="이메일">@
+            <input type="text" size="31">
         </p>
         <p>
-        	<input type="password" size="51" placeholder="패스워드">
-        </p>
-        <p>
-        	<button type="button" class="login">로그인</button>
+            <input type="password" size="31" placeholder="패스워드">
+            <input type="password" size="31" placeholder="패스워드 확인">
         </p>
     </fieldset>
-	<p class="failed">
-    	! 입력하신 정보가 맞지않습니다.
-    </p>
     
+    <fieldset>
+        <p>
+        	<input type="text" size="31" placeholder="이름">
+        </p>
+        <p>
+            <input type="text" size="10" placeholder="연락처"> -
+            <input type="text" size="10"> -
+            <input type="text" size="10">
+        </p>
+    </fieldset>
+
+    <textarea id="agreementrule2" rows="10" cols="93">
+  가. 개인정보의 수집 및 이용 목적 : 제도 및 시스템 개선 관련 각종 연구용역 및 설문조사, 통계분석
+ 
+  나. 개인정보 필수 수집 항목 : 이름, 이메일, 비밀번호, 휴대폰번호
+ 
+  다. 개인정보의 보유 및 이용기간 : 2년(사이트 폐쇄시 즉시 폐기)
+ 
+  라. 개인정보 수집방법 : 국토지리정보원은 별도의 개인정보를 수집하지 않습니다. 다만 자료 다운로드 주체의 식별을 위하여 개인정보를 일정기간 보존하게 됩니다.
+        
+  마. 정보주체의 권리(동의거부권) : 본 홈페이지 이용자는 개인정보 수집·이용을 거부할 권리가 있으나, 필수항목 수집을 거부할 경우 회원가입이 불가능합니다.
+       
+  바. 기타 : 기타 개인정보의 수집, 처리, 이용에 대한 사항은 국토지리정보원 개인정보보호방침을 참조하시기 바랍니다.
+    </textarea>
     <p>
-    	아직 회원이 아니십니까? 
-        <a href="#" onclick="goPage('main/index_regist');">회원가입 하기</a>
+    	<label>
+        	<input type="checkbox"> 개인수집 및 이용에 동의합니다.
+        </label>
+    </p>
+    <p class="btnCenter">
+    	<button type="button" class="join" onclick="goPage('main/index_id');">회원가입</button>
+        <button type="button" class="cancle" onclick="goPage('main/index_id');">취소</button>
     </p>
 </div>
 <!-- END WRAP --> 
 
-
 </body>
 </html>
+
+

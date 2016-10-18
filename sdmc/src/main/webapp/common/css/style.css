@@ -150,29 +150,114 @@ right:0;
 
 /* LOGIN */
 #LoginWrap {
-width:300px;
+width:400px;
 margin:250px auto;
 }
-#LoginWrap a {
-display:inline-block;
-width:202px;
-height:40px;
+#LoginWrap .loginTitle {
 margin-bottom:20px;
-text-indent:-999em;
-background-image:url(../images/sns_login.png);
-background-repeat:no-repeat;
+padding-top:50px;
+padding-bottom:10px;
+font-size:21px;
+color:#28394f;
+letter-spacing:-1px;
+border-bottom:1px solid #ccc;
+background:url(../images/logo_ngii.png) no-repeat left top;
 }
-#LoginWrap a.google {
-background-position:0 0;
+#LoginWrap p {
+margin-bottom:7px;
 }
-#LoginWrap a.facebook {
-background-position:0 -40px;
+#LoginWrap fieldset {
+margin-bottom:5px;
 }
-#LoginWrap a.naver {
-background-position:0 -80px;
+#LoginWrap input {
+padding:10px;
+font-size:15px;
+border-radius:7px;
+border:2px solid #ccc;
 }
-#LoginWrap a.daum {
-background-position:0 -120px;
+#LoginWrap input:hover {
+border:2px solid #5aafef;
+}
+#LoginWrap button.login {
+width:392px;
+padding:10px;
+font-size:15px;
+color:#fff;
+border-radius:7px;
+background-color:#5aafef;
+}
+#LoginWrap button.login:hover {
+background-color:#4297d7;
+}
+#LoginWrap a {
+text-decoration:underline;
+}
+#LoginWrap .failed {
+width:370px;
+padding:10px;
+color:#ff3300;
+border-radius:7px;
+border:1px solid #ff3300;
+}
+/* 회원가입 */
+#JoinWrap {
+width:750px;
+margin:50px auto;
+}
+#JoinWrap .loginTitle {
+margin-bottom:20px;
+padding-top:50px;
+padding-bottom:10px;
+font-size:21px;
+color:#28394f;
+letter-spacing:-1px;
+border-bottom:1px solid #ccc;
+background:url(../images/logo_ngii.png) no-repeat left top;
+}
+#JoinWrap p {
+margin-bottom:7px;
+}
+#JoinWrap fieldset {
+margin-bottom:20px;
+}
+#JoinWrap input {
+padding:10px;
+font-size:15px;
+border-radius:7px;
+border:2px solid #ccc;
+}
+#JoinWrap input:hover {
+border:2px solid #5aafef;
+}
+#JoinWrap textarea {
+width:100%;
+margin-bottom:15px;
+border:1px solid #ccc;
+}
+#JoinWrap button.join {
+width:545px;
+padding:10px;
+font-size:15px;
+color:#fff;
+border-radius:7px;
+background-color:#5aafef;
+}
+#JoinWrap button.join:hover {
+background-color:#4297d7;
+}
+#JoinWrap button.cancle {
+width:200px;
+padding:10px;
+font-size:15px;
+color:#fff;
+border-radius:7px;
+background-color:#bbb;
+}
+#JoinWrap button.cancle:hover {
+background-color:#aaa;
+}
+.btnCenter {
+text-align:center;
 }
 
 
@@ -251,8 +336,8 @@ text-align:right;
 
 }
 .header .login span {
-	display:inline-block;
-	padding-left:20px;
+display:inline-block;
+padding-left:20px;
 color:#5aafef;
 background:url(../images/ico_login.png) no-repeat left 50%;
 }

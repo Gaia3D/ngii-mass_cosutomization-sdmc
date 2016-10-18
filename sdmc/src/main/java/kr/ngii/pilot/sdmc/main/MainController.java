@@ -71,7 +71,6 @@ public class MainController {
 		
 		String formattedDate = dateFormat.format(date);
 		
-
 		if(nextPageName == null){
 			model.addAttribute("nextSubPageName", nextSubPageName );
 			nextPageName = "main/main";

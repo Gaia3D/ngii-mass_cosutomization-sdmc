@@ -66,9 +66,16 @@
  	</update>
  
  	<select id="selectUserInfo">
- 			
+ 			select * from plugin.sdmc_pg_user user
+ 			 where user.email = #{email}
+ 			   and user.password = #{password}
  	</select>
  	
  	<insert id="insertUserInfo">
+	 		insert into plugin.sdmc_pg_user
+	 			(email,password,tel_no,name)
+	 		values 
+	 			(#{email},#{password},#{tel_no},#{name})
+ 		
  	</insert>
  </mapper>

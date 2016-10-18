@@ -115,7 +115,7 @@ function goLogin(url){
 	// 구글+ 로그인 연계....
 
 	function idLogin(){
-		var uri = "/sdmc/signin.ngii";
+		var uri = "/sdmc/q22signin.ngii";
 		location.href=uri;
 	}
 </script>
