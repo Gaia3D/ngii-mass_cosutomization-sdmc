@@ -66,16 +66,17 @@
  	</update>
  	
  	<select id="selectUserList" parameterType="hashMap" resultType="userinfo">
+ 	
 	 	select * from plugin.sdmc_pg_user
 	 	 where email = #{0}
-	 	   and password = #{1}
+	 	   and password = crypt(#{1}, 'md5')
  	</select>
  	
  	<insert id="insertInformation">
  	insert into plugin.sdmc_pg_user
  		(email,password,name,tel_no)
  	values
- 		(#{email},#{password},#{name},#{telNo})
+ 		(#{email},crypt(#{password}, 'md5'),#{name},#{telNo})
  	</insert>
  	
  </mapper>

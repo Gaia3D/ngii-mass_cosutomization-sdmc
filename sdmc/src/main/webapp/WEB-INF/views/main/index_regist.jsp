@@ -99,8 +99,8 @@ function goLogin(url){
     </fieldset>
     
     <fieldset>
-        <p>
-        	<input type="text" name = "name" id ="name" size="31" placeholder="이름">
+        <p style="display:none;">
+        	<input type="text" name = "name" id ="name" size="31" value="none" placeholder="이름">
         </p>
         <p>
             <input type="text" maxlength="3" name="tel1" id="tel1" size="10" placeholder="연락처"> -
@@ -112,7 +112,7 @@ function goLogin(url){
     <textarea id="agreementrule2" rows="10" cols="93">
   가. 개인정보의 수집 및 이용 목적 : 제도 및 시스템 개선 관련 각종 연구용역 및 설문조사, 통계분석
  
-  나. 개인정보 필수 수집 항목 : 이름, 이메일, 비밀번호, 휴대폰번호
+  나. 개인정보 필수 수집 항목 : 이메일, 비밀번호, 휴대폰번호
  
   다. 개인정보의 보유 및 이용기간 : 2년(사이트 폐쇄시 즉시 폐기)
  
