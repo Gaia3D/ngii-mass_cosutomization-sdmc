@@ -13,6 +13,8 @@
         		자료생성이 완료되었습니다.
             </p>
             <button type="button">다운로드</button>
+            <button type="button">온맵으로 배포</button>
+            <button type="button">국가인터넷지도 배포</button>
         </div>
         <!-- 만료되었을 경우 아래 DIV 활성화 -->
         <div class="message" id="downExpired" style="display:none">
